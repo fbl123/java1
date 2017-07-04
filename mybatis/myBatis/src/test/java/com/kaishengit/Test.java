@@ -20,39 +20,39 @@ public class Test {
 	StudentMapper studentMapper;
 	@Before
 	public void befer(){
-		 sqlSession=SqlSessionManager.getSqlSession(false);
+		 sqlSession=SqlSessionManager.getSqlSession(true);
 		 studentMapper=sqlSession.getMapper(StudentMapper.class);
 	}
 	
 	
 	
-	@org.junit.Test
-	public void find(){
-		
-		try {
-			Reader reader=Resources.getResourceAsReader("mybatis.xml");
-			SqlSessionFactoryBuilder sqlSessionFactoryBuilder=new SqlSessionFactoryBuilder();
-			SqlSessionFactory sessionFactory=sqlSessionFactoryBuilder.build(reader);
-			SqlSession sqlSession=sessionFactory.openSession();
-			
-		
-			StudentMapper studentMapper=sqlSession.getMapper(StudentMapper.class);
-			
-//			Student stu =sqlSession.selectOne("com.kaishengit.mapper.StudentMapper.findById", 1);
-			Student stu=studentMapper.findById(1);
-			
-			System.out.println(stu.getName());
-			
-			sqlSession.close();
-			
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-		
-		
-		
-	}
+//	@org.junit.Test
+//	public void find(){
+//		
+//		try {
+//			Reader reader=Resources.getResourceAsReader("mybatis.xml");
+//			SqlSessionFactoryBuilder sqlSessionFactoryBuilder=new SqlSessionFactoryBuilder();
+//			SqlSessionFactory sessionFactory=sqlSessionFactoryBuilder.build(reader);
+//			SqlSession sqlSession=sessionFactory.openSession();
+//			
+//		
+//			StudentMapper studentMapper=sqlSession.getMapper(StudentMapper.class);
+//			
+////			Student stu =sqlSession.selectOne("com.kaishengit.mapper.StudentMapper.findById", 1);
+//			Student stu=studentMapper.findById(1);
+//			
+//			System.out.println(stu.getName());
+//			
+//			sqlSession.close();
+//			
+//		} catch (IOException e) {
+//			
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		
+//	}
 	
 	
 	@org.junit.Test
@@ -62,8 +62,21 @@ public class Test {
 		
 		List<Student> list=studentMapper.findAll();
 		for(Student stu:list){
-			System.out.println(stu.getName());
+			System.out.println(stu.getName()+stu.getPassword()+stu.getAge());
+			
 		}
+		
+	}
+	@org.junit.Test
+	public void add(){
+		Student stu=new Student();
+		stu.setName("djasgjag");
+		stu.setPassword("1321");
+		
+//		sqlSession.insert("com.kaishengit.mapper.StudentMapper.save",stu);
+//		sqlSession.commit();
+		studentMapper.save(stu);
+//		sqlSession.commit();
 		
 	}
 	
@@ -71,4 +84,6 @@ public class Test {
 	public void after(){
 		sqlSession.close();
 	}
+	
+	
 }

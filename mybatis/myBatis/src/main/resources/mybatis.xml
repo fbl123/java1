@@ -28,9 +28,11 @@
 		</environment>
 	</environments>
 	
+	
 	<!-- 加载Mapper配置文件 -->
 	<mappers>
 		<mapper resource="mapper/StudentMapper.xml"/>
+		
 	</mappers>
 	
 </configuration>

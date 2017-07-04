@@ -22,7 +22,7 @@ public class SqlSessionManager {
 			}
 	
 	}
-	public static SqlSession getSqlSession(boolean bl){
+	public static SqlSession getSqlSession(Boolean bl){
 		return sessionFactory.openSession(bl);
 		
 	}
