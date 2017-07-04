@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.kaishengit.entity.Student;
+import com.kaishengit.mapper.StudentMapper;
 
 public class Test {
 	
@@ -21,7 +22,12 @@ public class Test {
 			SqlSessionFactory sessionFactory=sqlSessionFactoryBuilder.build(reader);
 			SqlSession sqlSession=sessionFactory.openSession();
 			
-			Student stu =sqlSession.selectOne("com.kaishengit.mapper.StudentMapper.findById", 1);
+			
+			StudentMapper studentMapper=sqlSession.getMapper(StudentMapper.class);
+			
+//			Student stu =sqlSession.selectOne("com.kaishengit.mapper.StudentMapper.findById", 1);
+			Student stu=studentMapper.findById(1);
+			
 			System.out.println(stu.getName());
 			
 			sqlSession.close();

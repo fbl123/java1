@@ -21,9 +21,9 @@
 	
 	
 	
-	<delete id="delById" parameterType="int">
+	<!-- <delete id="delById" parameterType="int">
 		delete from student where id = #{id}
-	</delete>
+	</delete> -->
 	
 	
 </mapper>
