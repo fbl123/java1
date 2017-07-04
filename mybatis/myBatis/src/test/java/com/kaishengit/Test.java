@@ -60,9 +60,9 @@ public class Test {
 //		SqlSession sqlSession=SqlSessionManager.getSqlSession(false);
 //		StudentMapper studentMapper=sqlSession.getMapper(StudentMapper.class);
 		
-		List<Student> list=studentMapper.findAll();
+		List<Student> list=studentMapper.findClass();
 		for(Student stu:list){
-			System.out.println(stu.getName()+stu.getPassword()+stu.getAge());
+			System.out.println(stu);
 			
 		}
 		
@@ -79,11 +79,19 @@ public class Test {
 //		sqlSession.commit();
 		
 	}
+	@org.junit.Test
+	public void findclass(){}
+	
 	
 	@After
 	public void after(){
 		sqlSession.close();
 	}
-	
-	
+	@org.junit.Test
+	public void find(){
+		List<Student> list=sqlSession.selectList("com.kaishengit.mapper.StudentMapper.find");
+		for(Student stu:list){
+			System.out.println(stu);
+		}
+	}
 }
