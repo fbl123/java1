@@ -7,6 +7,7 @@ public class StuClass {
 	public Integer getId() {
 		return id;
 	}
+	
 	@Override
 	public String toString() {
 		return "StuClass [id=" + id + ", className=" + className + "]";

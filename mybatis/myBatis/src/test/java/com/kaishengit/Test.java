@@ -89,9 +89,14 @@ public class Test {
 	}
 	@org.junit.Test
 	public void find(){
-		List<Student> list=sqlSession.selectList("com.kaishengit.mapper.StudentMapper.find");
-		for(Student stu:list){
-			System.out.println(stu);
-		}
+		
+		Student stu=studentMapper.selectStudent(1);
+		System.out.println(stu);
+		
+		
+//		List<Student> list=sqlSession.selectList("com.kaishengit.mapper.StudentMapper.find");
+//		for(Student stu:list){
+//			System.out.println(stu);
+//		}
 	}
 }
