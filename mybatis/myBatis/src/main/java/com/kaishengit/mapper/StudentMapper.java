@@ -2,6 +2,7 @@ package com.kaishengit.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.kaishengit.entity.Student;
@@ -13,5 +14,8 @@ public interface StudentMapper {
 	public List<Student> findAll();
 	public void save(Student stu);
 	public List<Student> findClass();
-	
+	public Student findByNameAndClassId(@Param("name") String name,@Param("pwd") String passworrd);
+	public void saveList(List<Student> list);
+
+
 }

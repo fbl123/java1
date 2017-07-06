@@ -19,12 +19,7 @@
 		select * from t_class
 	</select>
 	
-	<!-- <insert id="save" parameterType="Student">
-		insert into student
-		(name,password)
-		values
-		(#{name},#{password})
-	</insert> -->
+	
 	
 	<!-- <delete id="delById" parameterType="int">
 		delete from student where id = #{id}

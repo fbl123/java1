@@ -7,10 +7,18 @@
 
 	<!-- 
 		根据Id查询User对象
-		id: 类似方法名
+		id: 类似方法名	
 		parameterType : 参数类型（可选）
 		resultType : 返回值类型(可选) 
 	-->
+	<sql id="name">
+		name
+	</sql>
+	<select id="findName" resultType="Student">
+		select <include refid="name"></include>from student
+		
+	</select>
+	
 	<select id="findById" parameterType="int" resultType="Student">
 		select * from student where id = #{id}
 	</select>
@@ -23,7 +31,11 @@
 		where s.class_id=c.id
 
 	</select>
-	
+	<select id="findByNameAndClassId" resultType="Student" parameterType="String">
+		<!-- select * from student where name=#{name} and password=#{password} -->
+		select * from student where name=#{name} and password=#{pwd}
+
+	</select>
 	
 	<select id="find" resultMap="hh">
 		select s.*,class_name from student s,t_class c
@@ -41,13 +53,23 @@
 		</association>
 	</resultMap>
 	
-	<insert id="save" parameterType="Student">
+	<insert id="save" parameterType="Student" useGeneratedKeys="true" keyProperty="id">
 		insert into student
-		(name,password)
+		(name,password,class_id)
 		values
-		(#{name},#{password})
+		(#{name},#{password},#{classId})
 	</insert>
-	
+	<insert id="saveList" parameterType="list">
+		insert into student (name,password,class_id)
+		values
+		<foreach collection="list" item="stu" separator=",">
+			(#{stu.name},#{stu.password},#{stu.classId})
+
+		</foreach>
+
+
+	</insert>
+
 	<!-- <delete id="delById" parameterType="int">
 		delete from student where id = #{id}
 	</delete> -->

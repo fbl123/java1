@@ -4,9 +4,10 @@ public class Student {
 
 	private Integer id;
 	private String name;
+	private String password;
 	private Integer classId;
 	private StuClass cl;
-	
+
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", name=" + name + ", classId=" + classId + ", cl=" + cl + ", password=" + password
@@ -27,7 +28,7 @@ public class Student {
 	public void setClassId(Integer classId) {
 		this.classId = classId;
 	}
-	private String password;
+	
 	public String getPassword() {
 		return password;
 	}
