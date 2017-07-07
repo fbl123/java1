@@ -1,7 +1,9 @@
 package com.kaishengit.dap;
 
+import com.kaishengit.dao.ClassDao;
 import com.kaishengit.dao.StuDao;
 import com.kaishengit.dao.com.kaishengit.dao.BookDao;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -9,7 +11,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Created by Administrator on 2017/7/7.
  */
 public class StuDaoTest {
-
+    ApplicationContext applicationContext;
+    @Before
+    public void before(){
+         applicationContext= new ClassPathXmlApplicationContext("applicationContext.xml");
+    }
     @Test
     public void say(){
         /**
@@ -27,4 +33,13 @@ public class StuDaoTest {
         BookDao book=(BookDao)applicationContext.getBean("book");
         System.out.println(book);
     }
+    @Test
+    public void classtest(){
+        ClassDao dao= (ClassDao) applicationContext.getBean("class");
+        System.out.println(dao.name);
+
+
+    }
+
+
 }
