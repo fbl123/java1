@@ -3,9 +3,9 @@
   <groupId>com.kaishengit</groupId>
   <artifactId>myBatis</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <properties>
-		
-	</properties>
+	  <properties>
+			
+		</properties>
   
   
   
@@ -36,12 +36,19 @@
 		    <artifactId>slf4j-api</artifactId>
 		    <version>1.7.25</version>
 		</dependency>
+		
 		<dependency>
 		    <groupId>org.slf4j</groupId>
 		    <artifactId>slf4j-log4j12</artifactId>
 		    <version>1.7.25</version>
 		</dependency>
   		
+  		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>5.0.0</version>
+		</dependency>
+			  		
   		
   		
   </dependencies>

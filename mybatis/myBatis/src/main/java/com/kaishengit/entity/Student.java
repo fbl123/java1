@@ -1,7 +1,18 @@
 package com.kaishengit.entity;
 
-public class Student {
 
+import java.io.Serializable;
+
+public class Student implements Serializable {
+    private static final long serialVersionUID = -6127347815262738854L;
+
+    /**
+	 * 
+	 */
+
+	/**
+	 * 
+	 */
 	private Integer id;
 	private String name;
 	private String password;

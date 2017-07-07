@@ -8,12 +8,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.After;
 import org.junit.Before;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.kaishengit.entity.Student;
 import com.kaishengit.mapper.StudentMapper;
 import com.kaishengit.util.SqlSessionManager;
@@ -140,9 +143,32 @@ public class Test {
 		list.add(stu2);
 		studentMapper.saveList(list);
 
-
 	}
-
+	  
+	@org.junit.Test
+	
+	public void findBy(){
+		
+		PageHelper.startPage(2,2);
+		List<Student> list=studentMapper.findAll();
+		PageInfo<Student> page=new PageInfo<Student>(list);
+		for(Student stu:list){
+			System.out.println(stu);
+		}
+//		System.out.println(page.getNavigateFirstPage());;
+		
+		
+		
+		/*
+		Map<String,String> map=new HashMap<String, String>();
+		map.put("name","jick");
+		map.put("pwd","123");
+		Student stu=studentMapper.findBy(map);
+		System.out.println(stu);*/
+		
+		
+		
+	}
 
 }
 

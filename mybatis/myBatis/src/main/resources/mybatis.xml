@@ -2,20 +2,28 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
-<configuration>
 
+<configuration>
+	
 	<settings>
 		<!-- 开启数据库列下划线风格和Java驼峰风格的映射 -->
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
+
 	
 	<!-- 注册别名 -->
 	<typeAliases>
 		<typeAlias type="com.kaishengit.entity.Student" alias="Student"/>
 		<typeAlias type="com.kaishengit.entity.StuClass" alias="StuClass"/>
 	</typeAliases>
-
+	<!--添加分页插件  -->
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+	</plugins>
+	
 	<environments default="dev">
+	
+	
 		<environment id="dev">
 			<!-- 配置事务管理器 -->
 			<transactionManager type="JDBC"></transactionManager>
@@ -34,6 +42,7 @@
 	<mappers>
 		<mapper resource="mapper/StudentMapper.xml"/>
 		<mapper resource="mapper/ClassMapper.xml"   />
+		
 	</mappers>
 	
 </configuration>
