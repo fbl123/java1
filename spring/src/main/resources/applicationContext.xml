@@ -4,7 +4,37 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- 将StuDao交给Spring管理  并将init()变为初始化调用的方法 destory()设定为容器销毁是调用的方法-->
     <!-- scope属性：prototype非单例  singleton 单例 默认为singleton-->
-    <bean id="sd" class="com.kaishengit.dao.StuDao" init-method="init" destroy-method="destory" scope="singleton"></bean>
+    <bean id="sd" class="com.kaishengit.dao.StuDao" init-method="init" destroy-method="destory" scope="singleton"/>
+
+
+    <bean id="book" class="com.kaishengit.dao.com.kaishengit.dao.BookDao">
+        <property name="bookname" value="九州"/>
+        <property name="number" value="12"/>
+        <property name="list">
+            <list>
+               <ref bean="sd"></ref>
+
+            </list>
+        </property>
+        <property name="set">
+            <set>
+                <value>姬野</value>
+                <value>悟空</value>
+            </set>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="sd" value-ref="sd"></entry>
+                <entry key="天驱" value-ref="sd"></entry>
+            </map>
+        </property>
+        <property name="pro">
+            <props>
+                <prop key="name">fbl</prop>
+                <prop key="age">20</prop>
+            </props>
+        </property>
+    </bean>
     <alias name="sd" alias="dao"></alias>
 
 </beans>
