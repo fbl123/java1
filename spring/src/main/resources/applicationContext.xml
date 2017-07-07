@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 将StuDao交给Spring管理  并将init()变为初始化调用的方法 destory()设定为容器销毁是调用的方法-->
+    <!-- scope属性：prototype非单例  singleton 单例 默认为singleton-->
+    <bean id="sd" class="com.kaishengit.dao.StuDao" init-method="init" destroy-method="destory" scope="singleton"></bean>
+
+
+</beans>
