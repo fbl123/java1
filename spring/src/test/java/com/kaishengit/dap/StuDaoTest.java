@@ -15,7 +15,8 @@ public class StuDaoTest {
          *
          */
         ApplicationContext applicationContext=new ClassPathXmlApplicationContext("applicationContext.xml");
-        StuDao stuDao=(StuDao)applicationContext.getBean("sd");
+//        StuDao stuDao=(StuDao)applicationContext.getBean("sd");
+        StuDao stuDao=(StuDao)applicationContext.getBean("dao");
         stuDao.say();
     }
 }
