@@ -1,5 +1,6 @@
 package com.kaishengit.dap;
 
+import com.kaishengit.Xml;
 import com.kaishengit.dao.ClassDao;
 import com.kaishengit.dao.StuDao;
 import com.kaishengit.dao.com.kaishengit.dao.BookDao;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.Proxy;
@@ -23,7 +25,9 @@ public class StuDaoTest {
     ApplicationContext applicationContext;
     @Before
     public void before(){
-         applicationContext= new ClassPathXmlApplicationContext("applicationContext.xml");
+
+        //         applicationContext= new ClassPathXmlApplicationContext("applicationContext.xml");
+        applicationContext=new AnnotationConfigApplicationContext(Xml.class);
     }
     @Test
     public void say(){

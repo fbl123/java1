@@ -5,6 +5,9 @@ import com.kaishengit.entity.MyInteface;
 import com.kaishengit.entity.Perpor;
 import com.kaishengit.entity.PerporInvoke;
 import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.Proxy;
 
@@ -28,7 +31,7 @@ public class test {
         myInteface.sayName("jick");*/
 
         /**
-         * CGLib动态代理
+         * CGLib动态代理 需添加Maven依赖
          */
      /*   Enhancer enhancer=new Enhancer();
         //设置被代理的类
@@ -43,8 +46,13 @@ public class test {
         /**
          * AOP
          */
-        Perpor per=new Perpor();
+        ApplicationContext applicationContext=
+                new ClassPathXmlApplicationContext("applicationContext.xml");
+//        AnnotationConfigApplicationContext applicationContext=new AnnotationConfigApplicationContext(Xml.class);
+        Perpor per= (Perpor) applicationContext.getBean("pp");
+//        Perpor per=new Perpor();
 //        per.sayName("jick");
+//        applicationContext.close();
        int a= (int) per.ha("jick");
         System.out.println(a);
     }

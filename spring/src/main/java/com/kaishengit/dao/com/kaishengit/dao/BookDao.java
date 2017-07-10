@@ -1,6 +1,9 @@
 package com.kaishengit.dao.com.kaishengit.dao;
 
 import com.kaishengit.dao.StuDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +13,7 @@ import java.util.Set;
 /**
  * Created by Administrator on 2017/7/7.
  */
+@Repository("book")
 public class BookDao {
     private String bookname;
 
