@@ -30,7 +30,7 @@ public class test {
         /**
          * CGLib动态代理
          */
-        Enhancer enhancer=new Enhancer();
+     /*   Enhancer enhancer=new Enhancer();
         //设置被代理的类
         enhancer.setSuperclass(Perpor.class);
         //设置代理对象
@@ -38,6 +38,14 @@ public class test {
         //创建代理对象
         Perpor per=(Perpor)enhancer.create();
         //调用方法
-        per.sayName("kobe");
+        per.sayName("kobe");*/
+
+        /**
+         * AOP
+         */
+        Perpor per=new Perpor();
+//        per.sayName("jick");
+       int a= (int) per.ha("jick");
+        System.out.println(a);
     }
 }

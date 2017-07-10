@@ -7,7 +7,9 @@
     <groupId>com.kaishengit</groupId>
     <artifactId>spring</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <properties></properties>
+    <properties>
+        <spring-vesion>4.3.9.RELEASE</spring-vesion>
+    </properties>
 
 
 
@@ -16,7 +18,6 @@
 
 
     <dependencies>
-
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
@@ -37,8 +38,21 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.3.9.RELEASE</version>
+            <version>${spring-vesion}</version>
+
         </dependency>
+        <!--AOP-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring-vesion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring-vesion}</version>
+        </dependency>
+
     <!--测试-->
         <dependency>
             <groupId>junit</groupId>
