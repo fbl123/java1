@@ -1,0 +1,12 @@
+创建.gitignore文件配置不上传的文件
+.metadata
+RemoteSystemsTempFiles/
+.settings/
+target/
+.classpath
+.gitignore
+.project
+.recommenders/
+.idea/
+spring.iml
+myBatis.iml
