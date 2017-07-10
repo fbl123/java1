@@ -8,6 +8,8 @@ import com.kaishengit.entity.Perpor;
 import com.kaishengit.entity.PerporInvoke;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -17,6 +19,7 @@ import java.lang.reflect.Proxy;
  * Created by Administrator on 2017/7/7.
  */
 public class StuDaoTest {
+
     ApplicationContext applicationContext;
     @Before
     public void before(){
@@ -54,6 +57,7 @@ public class StuDaoTest {
         MyInteface myInteface=(MyInteface)Proxy.newProxyInstance(per.getClass().getClassLoader(),
                 per.getClass().getInterfaces(),perporInvoke);
         myInteface.sayName("jick");
+
 
     }
 

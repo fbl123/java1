@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 /**
  * Created by Administrator on 2017/7/10.
+ * JDK的动态代理
  */
 public class PerporInvoke implements InvocationHandler {
 
