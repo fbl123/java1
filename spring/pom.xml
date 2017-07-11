@@ -74,6 +74,14 @@
             <artifactId>spring-jdbc</artifactId>
             <version>${spring-vesion}</version>
         </dependency>
+        <!--Spring 事务-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring-vesion}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
