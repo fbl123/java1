@@ -10,7 +10,10 @@
   	(#{name},#{classId},#{password})
 
   </insert>
-  
+  <select id="findAll" resultType="Student">
+  	select * from student
+  	
+  </select>
   
   
   

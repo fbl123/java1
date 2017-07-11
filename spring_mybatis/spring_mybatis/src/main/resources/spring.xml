@@ -41,6 +41,7 @@
     	<!-- 其他配置项 -->
     	<property name="configuration">
     		<bean class="org.apache.ibatis.session.Configuration">
+    			<!-- 将数据库中带有_的字段改为驼峰命名法 -->
     			<property name="mapUnderscoreToCamelCase" value="true"></property>
     		</bean>
     	</property>
