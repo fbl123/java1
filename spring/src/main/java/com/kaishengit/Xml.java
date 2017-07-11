@@ -1,9 +1,9 @@
 package com.kaishengit;
 
-import org.junit.Test;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+        import org.junit.Test;
+        import org.springframework.context.annotation.ComponentScan;
+        import org.springframework.context.annotation.Configuration;
+        import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * Created by Administrator on 2017/7/10.

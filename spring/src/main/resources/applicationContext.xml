@@ -9,10 +9,9 @@ http://www.springframework.org/schema/aop
 http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <!--开启Bean管理注解-->
-    <context:component-scan base-package="com.kaishengit"/>
+
     <!--开启自动扫描-->
-    <context:component-scan base-package="com.kaishengit"/>
+    <!--<context:component-scan base-package="com.kaishengit"/>-->
     <!--开启AOP注解-->
     <aop:aspectj-autoproxy/>
 

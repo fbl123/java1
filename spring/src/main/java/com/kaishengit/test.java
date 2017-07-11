@@ -46,11 +46,12 @@ public class test {
         /**
          * AOP
          */
-//        ApplicationContext applicationContext= new ClassPathXmlApplicationContext("applicationContext.xml");
-        AnnotationConfigApplicationContext applicationContext=new AnnotationConfigApplicationContext(Xml.class);
-        Perpor per= (Perpor) applicationContext.getBean("pp");
-//        Perpor per=new Perpor();
-        per.sayName("jick");
+    /*    ApplicationContext applicationContext= new ClassPathXmlApplicationContext("applicationContext.xml");
+        Perpor per=new Perpor();*/
+
+//        AnnotationConfigApplicationContext applicationContext=new AnnotationConfigApplicationContext(Xml.class);
+//        Perpor per= (Perpor) applicationContext.getBean("pp");
+//        per.sayName("jick");
 //        applicationContext.close();
 //       int a= (int) per.ha("jick");
 //        System.out.println(a);
