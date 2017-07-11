@@ -16,9 +16,7 @@ public class Perpor{
 //
 //    }
     public void sayName(String name){
-        if(true){
-            throw  new RuntimeException("yichang");
-        }
+
         System.out.println("name--->"+name);
     }
     public Object ha(String name){
