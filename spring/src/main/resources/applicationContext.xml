@@ -2,28 +2,36 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/aop
-http://www.springframework.org/schema/aop/spring-aop.xsd">
-<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
-       <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-       <!--xmlns:aop="http://www.springframework.org/schema/aop"-->
-       <!--xmlns:p="http://www.springframework.org/schema/p"-->
-       <!--xmlns:context="http://www.springframework.org/schema/context"-->
-       <!--xsi:schemaLocation="http://www.springframework.org/schema/beans-->
-       <!--http://www.springframework.org/schema/beans/spring-beans.xsd-->
-       <!--http://www.springframework.org/schema/aop-->
-       <!--http://www.springframework.org/schema/aop/spring-sop.xsd-->
-       <!--http://www.springframework.org/schema/context-->
-       <!--http://www.springframework.org/schema/context/spring-context.xsd">-->
-    <!-- 将StuDao交给Spring管理  并将init()变为初始化调用的方法 destory()设定为容器销毁是调用的方法-->
-    <!-- scope属性：prototype非单例  singleton 单例 默认为singleton-->
+http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
 
     <!--开启Bean管理注解-->
-    <!--<context:component-scan base-package="com.kaishengit"/>-->
+    <context:component-scan base-package="com.kaishengit"/>
+    <!--开启自动扫描-->
+    <context:component-scan base-package="com.kaishengit"/>
     <!--开启AOP注解-->
     <aop:aspectj-autoproxy/>
+
+
+    <!--读取properties配置文件-->
+    <context:property-placeholder location="classpath:config.properties"/>
+    <!--配置数据库连接池-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+    <!--配置jdbcTemplate-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+
     <bean id="sd" class="com.kaishengit.dao.StuDao" init-method="init"
           destroy-method="destory" scope="singleton"/>
     <bean id="class" class="com.kaishengit.dao.ClassDao">
@@ -67,12 +75,14 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
     </bean>
     <alias name="sd" alias="dao"></alias>
     <bean id="pp" class="com.kaishengit.entity.Perpor"/>
-    <bean id="aop" class="com.kaishengit.entity.AopAspect"/>
-    <aop:config>
+    <!--<bean id="aop" class="com.kaishengit.entity.AopAspect"/>-->
+
+
+    <!--<aop:config>
         <aop:aspect ref="aop">
             <aop:pointcut  id="aspect" expression="execution(* com.kaishengit..*.*(..))"/>
             <aop:after-returning method="afterAdvice"  pointcut-ref="aspect"/>
             <aop:before method="before" pointcut-ref="aspect" />
         </aop:aspect>
-    </aop:config>
+    </aop:config>-->
 </beans>
