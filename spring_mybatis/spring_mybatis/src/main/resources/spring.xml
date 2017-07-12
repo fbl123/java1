@@ -44,7 +44,7 @@
     			<!-- 将数据库中带有_的字段改为驼峰命名法 -->
     			<property name="mapUnderscoreToCamelCase" value="true"></property>
     		</bean>
-    	</property>
+    	</property>	
     	<!-- 添加插件 -->
     	<property name="plugins">
     		<array>
@@ -63,6 +63,7 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
     	<property name="basePackage" value="com.kaishengit.mapper"/>
     </bean>
+    
     
     
   </beans>

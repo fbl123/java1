@@ -7,9 +7,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.github.pagehelper.PageInfo;
+import com.kaishengit.Spring;
 import com.kaishengit.entity.Student;
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="classpath:spring.xml")
+//@ContextConfiguration(locations="classpath:spring.xml")
+@ContextConfiguration(classes=Spring.class)
 public class StudentServiceTest {
 	@Autowired
 	private StudentService studentService;
