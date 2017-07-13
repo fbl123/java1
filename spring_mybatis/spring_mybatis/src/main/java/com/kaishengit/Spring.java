@@ -70,6 +70,7 @@ public class Spring {
 		//设置别名包
 		factory.setTypeAliasesPackage("com.kaishengit.entity");
 		
+		
 		//加载mapper配置文件
 		ResourcePatternResolver resolver=new PathMatchingResourcePatternResolver();
 		Resource[] res=resolver.getResources("classpath:mapper/*.xml");
