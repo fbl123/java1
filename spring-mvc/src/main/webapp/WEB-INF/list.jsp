@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!Doctype html>
 
@@ -10,5 +11,9 @@
 </head>
 <body>
     <h1>你好</h1>
+    <c:if test="${not empty name}">
+        <h2>${name}</h2>
+    </c:if>
+
 </body>
 </html>
