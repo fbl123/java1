@@ -10,17 +10,23 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>你好</h1>
-    <c:if test="${not empty message}">
-        <h3 style="color: chartreuse">${message}</h3>
-    </c:if>
-    <c:if test="${not empty name}">
-        <h2>${name}</h2>
-    </c:if>
-        ${user.name}
+        <table>
+            <thead>
+                <tr>
+                    <th>书名</th>
+                    <th>作者</th>
+                </tr>
+            </thead>
+            <c:forEach items="${bookList}" var="book">
+                    <tr>
+                        <td>${book.bookname}</td>
+                        <td>${book.author}</td>
+                    </tr>
+
+
+            </c:forEach>
+
+        </table>
+
 </body>
-        <script>
-
-
-        </script>
 </html>

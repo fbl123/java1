@@ -1,0 +1,21 @@
+@Controller  成为控制器
+
+@RequestMapping 用来设置访问路径和请求方式
+属性：value=路径  method=请求方式（例如GET请求RequestMethod.GET）
+      consumes： 指定处理请求的提交内容类型（Content-Type），例如application/json, text/html;
+      produces=设置响应类型（如json的 produces = "application/json;charset=utf-8"）
+      params： 指定request中必须包含某些参数值是，才让该方法处理
+      headers： 指定request中必须包含某些指定的header值，才能让该方法处理请求。
+      
+ @requestParam
+   @requestParam主要用于在SpringMVC后台控制层获取参数，类似一种是request.getParameter("name")，
+   它有三个常用参数：defaultValue = "0", required = false, value = "isApp"；defaultValue 表示设置默认值，
+   required 铜过boolean设置是否是必须要传入的参数，value 值表示接受的传入的参数类型 
+   
+   @PathVariable
+    用于将请求URL中的模板变量映射到功能处理方法的参数上，即取出uri模板中的变量作为参数
+    
+    @ResponseBody
+     该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。
+
+    使用时机：返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用；

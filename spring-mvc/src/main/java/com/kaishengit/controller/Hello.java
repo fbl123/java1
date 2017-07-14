@@ -4,9 +4,11 @@ import com.kaishengit.entity.Student;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.swing.plaf.multi.MultiMenuItemUI;
 import java.io.*;
@@ -23,9 +25,10 @@ public class Hello {
     //get请求来的方法
     @RequestMapping(method = RequestMethod.GET)
 
-    public String say(){
-        //重定向
-        return "redirect:/hello/stu";
+    public String say(RedirectAttributes redirectAttributes){
+        //重定向 RedirectAttributes对象可以将重定向后的数据带到请求转发的页面上
+        redirectAttributes.addFlashAttribute("message","成功");
+        return "redirect:/hello/list";
     }
 
     @RequestMapping("/list/{id}")
@@ -42,22 +45,27 @@ public class Hello {
     }
 
 
-    //获取原始参数
+    //获取参数
     @GetMapping("/where")
     //参数名需要和URL的参数名一致
-    public ModelAndView find(Integer id){
+    public ModelAndView find( Integer id){
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("list");
         modelAndView.addObject("name","131");
         return  modelAndView;
     }
 
+    public String save(){
 
+
+        return "list";
+    }
 
     //produces设置响应类型
     @RequestMapping(value="/stu",produces = "application/json;charset=utf-8")
     @ResponseBody//说明是返回值，不是跳转网页
     public Object find(){
+
         Student stu=new Student();
         stu.setName("jick");
         stu.setAge(18);
@@ -92,6 +100,7 @@ public class Hello {
             String token= UUID.randomUUID().toString();
               //获得输入流
               try{
+
                   file=new File(file,name+token);
                   InputStream in=doc.getInputStream();
                  OutputStream outputStream=new FileOutputStream(file);
