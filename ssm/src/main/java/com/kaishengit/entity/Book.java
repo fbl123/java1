@@ -12,7 +12,7 @@ public class Book implements Serializable{
     private String author;
     private String publish;
     private Integer number;
-    private Integer nuwNumber;
+    private Integer nowNumber;
 
     public Integer getId() {
         return id;
@@ -54,11 +54,11 @@ public class Book implements Serializable{
         this.number = number;
     }
 
-    public Integer getNuwNumber() {
-        return nuwNumber;
+    public Integer getNowNumber() {
+        return nowNumber;
     }
 
-    public void setNuwNumber(Integer nuwNumber) {
-        this.nuwNumber = nuwNumber;
+    public void setNowNumber(Integer nowNumber) {
+        this.nowNumber = nowNumber;
     }
 }

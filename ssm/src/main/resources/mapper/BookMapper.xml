@@ -7,6 +7,11 @@
     <select id="findAll" resultType="Book">
         select * from t_book
     </select>
-
+    <insert id="save">
+        insert into t_book
+         (bookname,author,publish,number,nowNumber)
+        VALUES
+         (#{bookname},#{author},#{publish},#{number},#{nowNumber})
+    </insert>
 
 </mapper>

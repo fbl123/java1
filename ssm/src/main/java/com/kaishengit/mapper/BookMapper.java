@@ -11,4 +11,6 @@ public interface BookMapper {
 
     List<Book> findAll();
 
+    void save(Book book);
+
 }
