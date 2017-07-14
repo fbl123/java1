@@ -30,4 +30,11 @@ public class BookServiceImpl implements BookService {
 
 
     }
+
+    @Override
+    public void editBook(Book book) {
+        bookMapper.upda(book);
+    }
+
+
 }

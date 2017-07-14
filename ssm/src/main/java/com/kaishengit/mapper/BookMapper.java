@@ -13,4 +13,5 @@ public interface BookMapper {
 
     void save(Book book);
 
+    void upda(Book book);
 }

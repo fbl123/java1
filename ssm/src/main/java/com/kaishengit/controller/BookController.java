@@ -27,7 +27,10 @@ public class BookController {
         return "book/list";
     }
 
-
+    /**
+     * 添加书籍
+     * @return
+     */
     @GetMapping("/add")
     public String save(){
         return "book/add";
@@ -40,6 +43,24 @@ public class BookController {
             bookService.save(book);
             res = new Result("success");
         }catch(ServiceException e){
+            res = new Result("error",e.getMessage());
+        }
+
+        return res;
+    }
+
+    /**
+     * 修改书籍
+     * @return
+     */
+    @RequestMapping(value="/edit",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public Result edit(Book book){
+        Result res;
+        try{
+            bookService.editBook(book);
+            res=new Result("success");
+        }catch (ServiceException e){
             res = new Result("error",e.getMessage());
         }
 
