@@ -1,14 +1,10 @@
 package com.kaishengit.service.impl;
 
 import com.kaishengit.entity.Book;
-import com.kaishengit.exception.ServiceException;
 import com.kaishengit.mapper.BookMapper;
 import com.kaishengit.service.BookService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
+
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -42,6 +42,10 @@ public class BookController {
     public String save(){
         return "book/add";
     }
+
+    /*
+    前台表单里的name属性若与Book属性对应可以封装在Book对象中
+    */
     @RequestMapping(value = "/add",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public Result save(Book book){

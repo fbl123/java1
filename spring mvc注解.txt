@@ -1,21 +1,80 @@
-@Controller  ³ÉÎª¿ØÖÆÆ÷
+@Controller  æˆä¸ºæ§åˆ¶å™¨
 
-@RequestMapping ÓÃÀ´ÉèÖÃ·ÃÎÊÂ·¾¶ºÍÇëÇó·½Ê½
-ÊôĞÔ£ºvalue=Â·¾¶  method=ÇëÇó·½Ê½£¨ÀıÈçGETÇëÇóRequestMethod.GET£©
-      consumes£º Ö¸¶¨´¦ÀíÇëÇóµÄÌá½»ÄÚÈİÀàĞÍ£¨Content-Type£©£¬ÀıÈçapplication/json, text/html;
-      produces=ÉèÖÃÏìÓ¦ÀàĞÍ£¨ÈçjsonµÄ produces = "application/json;charset=utf-8"£©
-      params£º Ö¸¶¨requestÖĞ±ØĞë°üº¬Ä³Ğ©²ÎÊıÖµÊÇ£¬²ÅÈÃ¸Ã·½·¨´¦Àí
-      headers£º Ö¸¶¨requestÖĞ±ØĞë°üº¬Ä³Ğ©Ö¸¶¨µÄheaderÖµ£¬²ÅÄÜÈÃ¸Ã·½·¨´¦ÀíÇëÇó¡£
+@RequestMapping ç”¨æ¥è®¾ç½®è®¿é—®è·¯å¾„å’Œè¯·æ±‚æ–¹å¼
+å±æ€§ï¼švalue=è·¯å¾„  method=è¯·æ±‚æ–¹å¼ï¼ˆä¾‹å¦‚GETè¯·æ±‚RequestMethod.GETï¼‰
+      consumesï¼š æŒ‡å®šå¤„ç†è¯·æ±‚çš„æäº¤å†…å®¹ç±»å‹ï¼ˆContent-Typeï¼‰ï¼Œä¾‹å¦‚application/json, text/html;
+      produces=è®¾ç½®å“åº”ç±»å‹ï¼ˆå¦‚jsonçš„ produces = "application/json;charset=utf-8"ï¼‰
+      paramsï¼š æŒ‡å®šrequestä¸­å¿…é¡»åŒ…å«æŸäº›å‚æ•°å€¼æ˜¯ï¼Œæ‰è®©è¯¥æ–¹æ³•å¤„ç†
+      headersï¼š æŒ‡å®šrequestä¸­å¿…é¡»åŒ…å«æŸäº›æŒ‡å®šçš„headerå€¼ï¼Œæ‰èƒ½è®©è¯¥æ–¹æ³•å¤„ç†è¯·æ±‚ã€‚
       
  @requestParam
-   @requestParamÖ÷ÒªÓÃÓÚÔÚSpringMVCºóÌ¨¿ØÖÆ²ã»ñÈ¡²ÎÊı£¬ÀàËÆÒ»ÖÖÊÇrequest.getParameter("name")£¬
-   ËüÓĞÈı¸ö³£ÓÃ²ÎÊı£ºdefaultValue = "0", required = false, value = "isApp"£»defaultValue ±íÊ¾ÉèÖÃÄ¬ÈÏÖµ£¬
-   required Í­¹ıbooleanÉèÖÃÊÇ·ñÊÇ±ØĞëÒª´«ÈëµÄ²ÎÊı£¬value Öµ±íÊ¾½ÓÊÜµÄ´«ÈëµÄ²ÎÊıÀàĞÍ 
+   @requestParamä¸»è¦ç”¨äºåœ¨SpringMVCåå°æ§åˆ¶å±‚è·å–å‚æ•°ï¼Œç±»ä¼¼ä¸€ç§æ˜¯request.getParameter("name")ï¼Œ
+   å®ƒæœ‰ä¸‰ä¸ªå¸¸ç”¨å‚æ•°ï¼šdefaultValue = "0", required = false, value = "isApp"ï¼›defaultValue è¡¨ç¤ºè®¾ç½®é»˜è®¤å€¼ï¼Œ
+   required é“œè¿‡booleanè®¾ç½®æ˜¯å¦æ˜¯å¿…é¡»è¦ä¼ å…¥çš„å‚æ•°ï¼Œvalue å€¼è¡¨ç¤ºæ¥å—çš„ä¼ å…¥çš„å‚æ•°ç±»å‹ 
    
    @PathVariable
-    ÓÃÓÚ½«ÇëÇóURLÖĞµÄÄ£°å±äÁ¿Ó³Éäµ½¹¦ÄÜ´¦Àí·½·¨µÄ²ÎÊıÉÏ£¬¼´È¡³öuriÄ£°åÖĞµÄ±äÁ¿×÷Îª²ÎÊı
+    ç”¨äºå°†è¯·æ±‚URLä¸­çš„æ¨¡æ¿å˜é‡æ˜ å°„åˆ°åŠŸèƒ½å¤„ç†æ–¹æ³•çš„å‚æ•°ä¸Šï¼Œå³å–å‡ºuriæ¨¡æ¿ä¸­çš„å˜é‡ä½œä¸ºå‚æ•°
     
     @ResponseBody
-     ¸Ã×¢½âÓÃÓÚ½«ControllerµÄ·½·¨·µ»ØµÄ¶ÔÏó£¬Í¨¹ıÊÊµ±µÄHttpMessageConverter×ª»»ÎªÖ¸¶¨¸ñÊ½ºó£¬Ğ´Èëµ½Response¶ÔÏóµÄbodyÊı¾İÇø¡£
+     è¯¥æ³¨è§£ç”¨äºå°†Controllerçš„æ–¹æ³•è¿”å›çš„å¯¹è±¡ï¼Œé€šè¿‡é€‚å½“çš„HttpMessageConverterè½¬æ¢ä¸ºæŒ‡å®šæ ¼å¼åï¼Œå†™å…¥åˆ°Responseå¯¹è±¡çš„bodyæ•°æ®åŒºã€‚
 
-    Ê¹ÓÃÊ±»ú£º·µ»ØµÄÊı¾İ²»ÊÇhtml±êÇ©µÄÒ³Ãæ£¬¶øÊÇÆäËûÄ³ÖÖ¸ñÊ½µÄÊı¾İÊ±£¨Èçjson¡¢xmlµÈ£©Ê¹ÓÃ£»
+    ä½¿ç”¨æ—¶æœºï¼šè¿”å›çš„æ•°æ®ä¸æ˜¯htmlæ ‡ç­¾çš„é¡µé¢ï¼Œè€Œæ˜¯å…¶ä»–æŸç§æ ¼å¼çš„æ•°æ®æ—¶ï¼ˆå¦‚jsonã€xmlç­‰ï¼‰ä½¿ç”¨ï¼›
+    
+@Resourceå’Œ@Autowired
+@Resourceå’Œ@Autowiredéƒ½æ˜¯åšbeançš„æ³¨å…¥æ—¶ä½¿ç”¨ï¼Œå…¶å®@Resourceå¹¶ä¸æ˜¯Springçš„æ³¨è§£ï¼Œ
+å®ƒçš„åŒ…æ˜¯javax.annotation.Resourceï¼Œéœ€è¦å¯¼å…¥ï¼Œä½†æ˜¯Springæ”¯æŒè¯¥æ³¨è§£çš„æ³¨å…¥ã€‚
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+Beanç®¡ç†    
+@Component:æ ‡å‡†ä¸€ä¸ªæ™®é€šçš„spring Beanç±»ã€‚
+@Controller:æ ‡æ³¨ä¸€ä¸ªæ§åˆ¶å™¨ç»„ä»¶ç±»ã€‚
+@Service:æ ‡æ³¨ä¸€ä¸ªä¸šåŠ¡é€»è¾‘ç»„ä»¶ç±»ã€‚
+@Repository:æ ‡æ³¨ä¸€ä¸ªDAOç»„ä»¶ç±»ã€‚
