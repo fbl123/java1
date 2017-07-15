@@ -7,6 +7,19 @@
         update t_book set bookname=#{bookname},author=#{author}
         where id=#{id}
     </update>
+    <delete id="delById">
+        delete  from t_book where id=#{id}
+
+    </delete>
+
+    <select id="findByParam" resultType="Book">
+        select * from t_book
+        <where>
+           <if test="key !=null and key !='' and value !=null and value != ''">
+                   ${key}=#{value}
+           </if>
+        </where>
+    </select>
 
     <select id="findAll" resultType="Book">
         select * from t_book

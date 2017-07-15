@@ -4,13 +4,13 @@ import com.kaishengit.entity.Book;
 import com.kaishengit.exception.ServiceException;
 import com.kaishengit.service.BookService;
 import com.kaishengit.utils.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Administrator on 2017/7/14.
@@ -18,12 +18,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/book")
 public class BookController {
+    Logger logger= LoggerFactory.getLogger(BookController.class);
     @Autowired
     BookService bookService;
 
     @GetMapping
-    public String book(Model model){
-        model.addAttribute("bookList",bookService.findAll());
+    public String book(Model model,String key,String value){
+       key= com.kaishengit.utils.StringUtils.newString(key);
+        value=com.kaishengit.utils.StringUtils.newString(value);
+        logger.debug("key:{}",key);
+        logger.debug("value:{}",value);
+
+        model.addAttribute("bookList",bookService.findByParam(key,value));
+        System.out.println("------------------------------>"+bookService.findByParam(key,value));
         return "book/list";
     }
 
@@ -66,6 +73,29 @@ public class BookController {
 
         return res;
     }
+
+    /**
+     * 删除
+     * @return
+     */
+    @RequestMapping(value="/del",produces = "applocation/josn;charset=utf-8")
+    @ResponseBody
+    public Result delBook(String  id){
+        Result res;
+        if(org.apache.commons.lang3.StringUtils.isNumeric(id)){
+               bookService.delById(id);
+               res = new Result("success");
+        }else{
+            res = new Result("error","参数错误");
+        }
+        return res;
+    }
+
+
+
+
+
+
 
 
 

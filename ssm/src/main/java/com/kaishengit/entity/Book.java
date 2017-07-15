@@ -54,6 +54,18 @@ public class Book implements Serializable{
         this.number = number;
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", bookname='" + bookname + '\'' +
+                ", author='" + author + '\'' +
+                ", publish='" + publish + '\'' +
+                ", number=" + number +
+                ", nowNumber=" + nowNumber +
+                '}';
+    }
+
     public Integer getNowNumber() {
         return nowNumber;
     }

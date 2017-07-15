@@ -15,4 +15,8 @@ public interface BookService {
 
 
     void editBook(Book book);
+
+    void delById(String id);
+
+    List<Book> findByParam(String key, String value);
 }

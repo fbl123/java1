@@ -12,7 +12,7 @@ public class StringUtils {
 
    static Logger logger = LoggerFactory.getLogger(StringUtils.class);
      public static String newString(String str){
-         if(!org.springframework.util.StringUtils.isEmpty(str)){
+         if(org.apache.commons.lang3.StringUtils.isNotEmpty(str)){
 
             try{
                 str = new String(str.getBytes("iso-8859-1"),"utf-8");
