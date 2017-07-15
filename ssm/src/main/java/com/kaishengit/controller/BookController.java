@@ -60,6 +60,24 @@ public class BookController {
      * 修改书籍
      * @return
      */
+    @GetMapping(value="/edit",produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public Result edit(Model model,String id){
+        Result res;
+        if(org.apache.commons.lang3.StringUtils.isNumeric(id)){
+            try{
+                Book book=bookService.findByid(id);
+                res=new Result("success");
+                res.setData(book);
+            }  catch (ServiceException e){
+                res=new Result("error",e.getMessage());
+            }
+        }else{
+            res=new Result("error","参数异常");
+        }
+
+        return res;
+    }
     @RequestMapping(value="/edit",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public Result edit(Book book){

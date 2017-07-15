@@ -19,4 +19,6 @@ public interface BookMapper {
     void delById(String id);
 
     List<Book> findByParam(Map<String, Object> map);
+
+    Book findById(String id);
 }

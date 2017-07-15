@@ -24,6 +24,9 @@
     <select id="findAll" resultType="Book">
         select * from t_book
     </select>
+    <select id="findById" resultType="com.kaishengit.entity.Book">
+        select * from t_book where id=#{id}
+    </select>
     <insert id="save">
         insert into t_book
          (bookname,author,publish,number,nowNumber)

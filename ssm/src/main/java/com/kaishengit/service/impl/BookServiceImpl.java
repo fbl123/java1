@@ -56,5 +56,10 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    @Override
+    public Book findByid(String id) {
+        return bookMapper.findById(id);
+    }
+
 
 }
