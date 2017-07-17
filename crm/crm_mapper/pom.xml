@@ -55,6 +55,10 @@
             <artifactId>pagehelper</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.kaishengit</groupId>
+            <artifactId>crm_common</artifactId>
+        </dependency>
 
     </dependencies>
 
