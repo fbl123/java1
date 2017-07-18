@@ -1,10 +1,13 @@
 package com.kaishengit.crm.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/7/17.
  */
-public class Dept {
+public class Dept implements Serializable{
 
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
     private String deptName;

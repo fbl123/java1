@@ -1,12 +1,14 @@
 package com.kaishengit.crm.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/7/17.
  */
-public class Book {
+public class Book implements Serializable{
     private Integer id;
     private String bookname;
-
+    private static final long serialVersionUID = 1L;
     public Integer getId() {
         return id;
     }
