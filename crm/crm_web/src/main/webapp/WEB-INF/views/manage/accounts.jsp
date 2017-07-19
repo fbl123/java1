@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -20,6 +21,7 @@
                 <div class="col-md-2">
                     <div class="box">
                         <div class="box-body">
+                            <input type="hidden" id="deptId" value="">
                             <button class="btn btn-default" id="addDeptBtn">添加部门</button>
                             <ul id="ztree" class="ztree"></ul>
                         </div>
@@ -36,7 +38,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table class="table">
+                            <table class="table" id="accountTable">
                                 <thead>
                                 <tr>
                                     <th>姓名</th>
@@ -45,6 +47,20 @@
                                     <th>#</th>
                                 </tr>
                                 </thead>
+                               <%-- <tbody class="table">
+                                    <c:if test="${not empty list}">
+                                        <c:forEach items="${list}" var="account">
+                                            <tr>
+                                                <td>${account.userName}</td>
+                                                <td><c:forEach items="${account.deptName}" var="name">
+                                                    ${name.deptName}
+                                                </c:forEach></td>
+                                                <td>${account.mobile}</td>
+                                                <td><a href='javascript:;' rel=${account.id} class='delLink'><i class='fa fa-trash text-danger'></i></a></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:if>
+                                </tbody>--%>
                             </table>
                         </div>
                     </div>
@@ -103,8 +119,65 @@
 <script src="/static/plugins/tree/js/jquery.ztree.all.min.js"></script>
 <script src="/static/plugins/layer/layer.js"></script>
 <script src="/static/plugins/validate/jquery.validate.js"></script>
+<script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script>
     $(function(){
+        var dataTable = $("#accountTable").DataTable({
+            paging: false,
+            "ordering": false,
+            "searching": false,
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url : "/acc/load.json",
+                data : function(data) {
+                    data.deptId = $("#deptId").val();
+                }
+            },
+            "columns":[
+                {"data":"userName"},
+                {"data":function (row) {
+                    var result = "";
+                    for(var i = 0;i < row.deptName.length;i++) {
+                        result += row.deptName[i].deptName + " &nbsp;&nbsp;";
+                    }
+                    return result;
+                }},
+                {"data":"mobile"},
+                {"data":function (row) {
+                    return "<a href='javascript:;' rel='"+row.id+"' class='delLink'><i class='fa fa-trash text-danger'></i></a>";
+                }}
+            ],
+            language:{
+                "info":  "显示 _START_ 到 _END_ 共 _TOTAL_ 条数据",
+            }
+        });
+
+
+        $(document).delegate(".delLink","click",function () {
+            var id = $(this).attr("rel");
+            layer.confirm("确定要删除吗?",function (index) {
+                layer.close(index);
+                $.post("/acc/del?id="+id).done(function(data){
+                    if(data.state == "success") {
+                        layer.msg("删除成功");
+                        dataTable.ajax.reload();
+                    } else {
+                        layer.msg(data.message);
+                    }
+                }).error(function(){
+                    layer.msg("服务器异常");
+                });
+            });
+        });
+
+
+
+
+
+
+
         var setting = {
             data: {
                 simpleData: {
@@ -117,7 +190,9 @@
             },
             callback:{
                 onClick:function(event,treeId,treeNode,clickFlag){
-                    alert(treeNode.id + treeNode.name + treeNode.pId);
+//                    alert(treeNode.id + treeNode.name + treeNode.pId);
+                    $("#deptId").val(treeNode.id);
+                    dataTable.ajax.reload();
                 }
             }
         };
@@ -129,7 +204,7 @@
         $("#addDeptBtn").click(function () {
             layer.prompt({"title":"请输入部门名称"},function(text,index){
                 layer.close(index);//关闭对话框
-                $.post("/manage/account/dept/new",{"deptName":text,"pId":1000}).done(function(data){
+                $.post("/manage/account/dept/new",{"deptName":text,"pId":10000}).done(function(data){
                     if(data.state == "success") {
                         layer.msg("添加成功");
                         tree.reAsyncChildNodes(null, "refresh");
@@ -182,7 +257,7 @@
         $("#saveAccountBtn").click(function () {
             $("#addAccountForm").submit();
         })
-        $("#addAccountForm").validate({
+        $("#addAccountForm").validate(  {
             errorClass:"text-danger",
             errorElement:"span",
             rules:{
@@ -213,24 +288,11 @@
                     required:"至少选择一个部门"
                 }
             },
-//            submitHandler:function(){
-//                $.post("/manage/account/new",$("#addAccountForm").serialize()).done(function(data){
-//                    if(data.state == 'success') {
-//                        $("#addAccountForm")[0].reset();
-//                        $("#addAccountModal").modal('hide');
-//                        layer.msg("添加成功");
-//                    } else {
-//                        layer.msg(data.message);
-//                    }
-////                }).error(function(){
-//                    layer.msg("服务器异常");
-//                });
-//            }
-//        });
 
             submitHandler:function () {
+                
                 $.ajax({
-                    url:"acc/add",
+                    url:"/acc/add",
                     type:"post",
                     data:$("#addAccountForm").serialize(),
                     success:function(data){
@@ -240,6 +302,7 @@
                             //隐藏模态框
                             $("#addAccountModal").modal('hide');
                             layer.msg("添加成功");
+                            dataTable.ajax.reload();
                         }else{
                             layer.msg(data.message);
                         }

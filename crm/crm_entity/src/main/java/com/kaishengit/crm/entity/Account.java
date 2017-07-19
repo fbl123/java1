@@ -2,6 +2,7 @@ package com.kaishengit.crm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/18.
@@ -10,6 +11,19 @@ public class Account implements Serializable{
         private String mobile;
         private Integer id;
         private String userName;
+        private List<Dept> deptName;
+
+    public List<Dept> getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(List<Dept> deptName) {
+        this.deptName = deptName;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public String getMobile() {
         return mobile;

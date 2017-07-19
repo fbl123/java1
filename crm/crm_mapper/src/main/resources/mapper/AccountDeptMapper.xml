@@ -8,4 +8,8 @@
     <insert id="save">
         insert into t_account_dept (dept_id,account_id)values(#{deptId},#{accountId})
     </insert>
+    <delete id="delect">
+
+        delete from t_account_dept where account_id=#{id}
+    </delete>
 </mapper>

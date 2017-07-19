@@ -5,11 +5,16 @@ import com.kaishengit.crm.entity.AccountDept;
 import com.kaishengit.crm.mapper.AccountDeptMapper;
 import com.kaishengit.crm.mapper.AccountMapper;
 import com.kaishengit.crm.service.AccountService;
+import com.kaishengit.exception.ServiceException;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/18.
@@ -20,11 +25,13 @@ public class AccountServiceImpl implements AccountService {
     private AccountMapper accountMapper;
     @Autowired
     private AccountDeptMapper accountDeptMapper;
-
-
+    @Value("${salt}")
+    private String salt;
+    //添加员工
     @Override
     @Transactional
     public void save(Account account,Integer[] integers) {
+        account.setPassword(DigestUtils.md5Hex(account.getPassword()+salt));
         account.setCreatTime(new Date());
         accountMapper.save(account);
         for(Integer dd:integers){
@@ -35,4 +42,54 @@ public class AccountServiceImpl implements AccountService {
         }
 
     }
+    //删除员工
+    @Override
+    @Transactional
+    public void delect(Integer id) {
+        //删除员工
+        accountMapper.delect(id);
+        //删除员工对应的部门关系
+        accountDeptMapper.delect(id);
+    }
+    //显示
+    @Override
+    public List<Account> findAll() {
+        return accountMapper.findAll();
+    }
+
+    @Override
+    public Long count() {
+        return accountMapper.count();
+    }
+
+    @Override
+    public Long countByDeptId(Integer id) {
+        if(new Integer(10000).equals(id)) {
+            id = null;
+        }
+        return accountMapper.countByDeptId(id);
+    }
+
+    /**
+     *
+     * 登陆查询
+     */
+    @Override
+    public Account findByModile(String modile, String password) {
+        Account account=accountMapper.findByModile(modile);
+        if(account!=null&&account.getPassword().equals(DigestUtils.md5Hex(password+salt))){
+
+        }else{
+            throw new ServiceException("账号或密码错误");
+        }
+
+       return account;
+    }
+
+    @Override
+    public List<Account> findByDeptId(Integer id) {
+        return accountMapper.findByDeptId(id);
+    }
+
+
 }

@@ -73,14 +73,14 @@ public class DeptController {
     }
 
 
-    @PostMapping("/acc/add")
-    @ResponseBody
-
-    public Result save(Account account, Integer[] deptId){
-        accountService.save(account,deptId);
-
-        return Result.success();
-    }
+//    @PostMapping("/acc/add")
+//    @ResponseBody
+//
+//    public Result save(Account account, Integer[] deptId){
+//        accountService.save(account,deptId);
+//
+//        return Result.success();
+//    }
 
 
 }

@@ -1,6 +1,7 @@
 package com.kaishengit.crm.mapper;
 
 import com.kaishengit.crm.entity.Account;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,4 +15,13 @@ public interface AccountMapper {
 
     void save(Account account);
 
+    void delect(@Param("id")Integer id);
+
+    Long count();
+
+    Long countByDeptId(@Param("id")Integer id);
+
+    Account findByModile(String mobile);
+
+    List<Account> findByDeptId(@Param("id") Integer id);
 }
