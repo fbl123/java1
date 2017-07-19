@@ -65,7 +65,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Long countByDeptId(Integer id) {
         if(new Integer(10000).equals(id)) {
-            id = null;
+            return accountMapper.count();
         }
         return accountMapper.countByDeptId(id);
     }
@@ -88,6 +88,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Account> findByDeptId(Integer id) {
+        if(new Integer(10000).equals(id)){
+            id=null;
+        }
         return accountMapper.findByDeptId(id);
     }
 

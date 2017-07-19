@@ -4,6 +4,7 @@ import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.dto.Result;
 import com.kaishengit.exception.ServiceException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,19 +26,23 @@ public class LoginController {
      * @return
      */
     @GetMapping("/")
-    public String login(){
+    public String login(HttpSession session,RedirectAttributes redirectAttributes){
+        session.invalidate();
         return "login";
     }
     /**
      * 验证登陆
      */
-    @PostMapping("/login")
+    @PostMapping("/")
     @ResponseBody
-    public Result login(String mobile, String password, HttpSession session){
+    public Result login(String mobile, String password, HttpSession session,String callback){
+        if(!StringUtils.isNotEmpty(callback)){
+            callback="/home";
+        }
        try{
            Account account=accountService.findByModile(mobile,password);
            session.setAttribute("acc",account);
-           return Result.success(account);
+           return Result.success(callback,account);
        }catch(ServiceException e){
            return Result.error(e.getMessage());
         }
@@ -60,6 +65,11 @@ public class LoginController {
     public Result profile(Account account){
 
         return Result.success();
+    }
+
+    @GetMapping("/home")
+    public String home(){
+        return "home";
     }
 
 

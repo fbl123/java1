@@ -21,8 +21,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                 return true;
             }
         }
-
-            return true;
+         response.sendRedirect("/?callback="+url);
+        return false;
 
     }
 }

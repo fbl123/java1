@@ -11,7 +11,9 @@ public class Result {
     private String state;
     private String message;
     private Object data;
-
+    public static Result success(String message,Object data){
+        return new Result(SUCCESS,message,data);
+    }
     public static Result success(){return new Result(SUCCESS);}
     public static Result success(Object data){
         Result res=new Result(SUCCESS);
@@ -34,6 +36,12 @@ public class Result {
     //正常返回数据时调用此构造
     public Result(String state, Object data){
         this.state = state;
+        this.data = data;
+    }
+    //返回数据和客户访问路径
+    public Result(String state, String message, Object data) {
+        this.state = state;
+        this.message = message;
         this.data = data;
     }
 
