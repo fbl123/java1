@@ -24,4 +24,6 @@ public interface AccountMapper {
     Account findByModile(String mobile);
 
     List<Account> findByDeptId(@Param("id") Integer id);
+
+    void update(Account account);
 }

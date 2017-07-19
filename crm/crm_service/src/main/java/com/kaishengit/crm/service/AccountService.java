@@ -1,6 +1,8 @@
 package com.kaishengit.crm.service;
 
 import com.kaishengit.crm.entity.Account;
+import com.kaishengit.exception.ServiceException;
+
 import java.util.List;
 
 /**
@@ -17,7 +19,9 @@ public interface AccountService {
 
     Long countByDeptId(Integer id);
 
-    Account findByModile(String modile,String password);
+    Account findByModile(String modile,String password) throws ServiceException;
 
     List<Account> findByDeptId(Integer id);
+
+    void update(String oldPassword, Account acc, Account session) throws ServiceException;
 }

@@ -55,16 +55,27 @@ public class LoginController {
     }
     /**
      * 个人设置
+     *
      */
     @GetMapping("/profile")
     public String profile() {
         return "profile";
     }
+    //修改密码
     @PostMapping("/profile")
     @ResponseBody
-    public Result profile(Account account){
+    public Result profile(String oldPassword,Account acc,HttpSession session){
+        Account account= (Account) session.getAttribute("acc");
+            try{
+                accountService.update(oldPassword,acc,account);
+                return Result.success();
+            }catch (ServiceException e){
+                return Result.error(e.getMessage());
+            }
 
-        return Result.success();
+
+
+
     }
 
     @GetMapping("/home")

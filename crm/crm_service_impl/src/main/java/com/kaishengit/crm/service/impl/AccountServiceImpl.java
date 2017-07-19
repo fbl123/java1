@@ -75,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
      * 登陆查询
      */
     @Override
-    public Account findByModile(String modile, String password) {
+    public Account findByModile(String modile, String password) throws ServiceException{
         Account account=accountMapper.findByModile(modile);
         if(account!=null&&account.getPassword().equals(DigestUtils.md5Hex(password+salt))){
 
@@ -92,6 +92,18 @@ public class AccountServiceImpl implements AccountService {
             id=null;
         }
         return accountMapper.findByDeptId(id);
+    }
+
+    @Override
+    public void update(String oldPassword, Account acc, Account account) throws ServiceException {
+
+        if(!account.getPassword().equals(DigestUtils.md5Hex(oldPassword+salt))){
+            throw new ServiceException("密码错误");
+        }
+        account.setPassword(DigestUtils.md5Hex(acc.getPassword()+salt));
+        account.setUpdateTime(new Date());
+        accountMapper.update(account);
+
     }
 
 

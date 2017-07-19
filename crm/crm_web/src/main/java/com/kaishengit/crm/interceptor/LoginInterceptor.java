@@ -14,7 +14,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String url = request.getRequestURI();
-        if (url.equals("/")) {
+        if (url.equals("/")||url.startsWith("/static/")) {
             return true;
         } else {
             if (request.getSession().getAttribute("acc") != null) {
