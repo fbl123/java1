@@ -20,10 +20,10 @@
             <groupId>com.kaishengit</groupId>
             <artifactId>crm_service</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.kaishengit</groupId>
-            <artifactId>crm_mapper</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.kaishengit</groupId>-->
+            <!--<artifactId>crm_mapper</artifactId>-->
+        <!--</dependency>-->
 
 
         <dependency>

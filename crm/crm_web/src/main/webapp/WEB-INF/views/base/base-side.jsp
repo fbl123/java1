@@ -26,7 +26,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/static/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">${sessionScope.curr_user.userName}</span>
+                        <span class="hidden-xs">${sessionScope.acc.userName}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -34,9 +34,9 @@
                             <img src="/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                             <p>
-                                ${sessionScope.curr_user.userName}
+                                ${sessionScope.acc.userName}
                                 <small>
-                                    <c:forEach items="${sessionScope.curr_user.deptList}" var="dept">
+                                    <c:forEach items="${sessionScope.acc.deptName}" var="dept">
                                         ${dept.deptName} &nbsp;&nbsp;
                                     </c:forEach>
                                 </small>
@@ -48,7 +48,7 @@
                                 <a href="/profile" class="btn btn-default btn-flat">个人设置</a>
                             </div>
                             <div class="pull-right">
-                                <a href="/logout" class="btn btn-default btn-flat">安全退出</a>
+                                <a href="/" class="btn btn-default btn-flat">安全退出</a>
                             </div>
                         </li>
                     </ul>

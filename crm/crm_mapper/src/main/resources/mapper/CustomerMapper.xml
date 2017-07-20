@@ -15,11 +15,15 @@
         update customer set
         account_id=#{accountId},address=#{address},tell=#{tell},
         job=#{job},mark=#{mark},trade=#{trade},follow_time=#{followTime},
-        update_time=#{updateTime}
+        update_time=#{updateTime} where id=#{id}
 
 
 
     </update>
+    <delete id="del">
+      delete from customer where id=#{id}
+
+    </delete>
     <select id="findByTell" resultType="com.kaishengit.crm.entity.Customer">
 
         select * from customer where tell=#{tell}
@@ -30,10 +34,10 @@
            and (cust_name like #{custName} or tell like #{custName})
         </if>
     </select>
+    <select id="findById" resultType="com.kaishengit.crm.entity.Customer">
 
-
-
-
+        select * from customer where id=#{id}
+    </select>
 
 
 </mapper>

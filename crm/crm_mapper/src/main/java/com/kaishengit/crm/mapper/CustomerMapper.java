@@ -15,4 +15,8 @@ public interface CustomerMapper {
     List<Customer> findByAccId(Customer customer);
 
     void update(Customer customer);
+
+    Customer findById(String id);
+
+    void del(Customer customer);
 }

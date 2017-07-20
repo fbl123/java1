@@ -8,7 +8,6 @@ import com.kaishengit.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.support.CustomSQLErrorCodesTranslation;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -35,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
         //添加客户
         customer.setAccountId(account.getId());
-        account.setCreateTime(new Date());
+        customer.setCreatTime(new Date());
         customerMapper.save(customer);
     }
 
@@ -57,11 +56,25 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setCustName("%"+(String) map.get("keyword")+"%");
 
         }
+
         return customerMapper.findByAccId(customer);
     }
 
     @Override
     public void update(Customer customer) {
         customerMapper.update(customer);
+    }
+
+    @Override
+    public Customer findById(String id) {
+        return customerMapper.findById(id);
+    }
+
+    @Override
+    public void del(Customer customer) {
+        //TODO
+
+
+        customerMapper.del(customer);
     }
 }
