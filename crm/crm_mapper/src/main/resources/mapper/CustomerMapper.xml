@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.crm.mapper.CustomerMapper">
+
+
+    <insert id="save">
+        insert into customer(cust_name,account_id,address,tell,
+        job,mark,`level`,trade,follow_time,source,creat_time,update_time,sex)
+        values(#{custName},#{accountId},#{address},#{tell},#{job},#{mark},
+        #{level},#{trade},#{followTime},#{source},#{creatTime},#{updateTime},#{sex})
+    </insert>
+    <update id="update">
+        update customer set
+        account_id=#{accountId},address=#{address},tell=#{tell},
+        job=#{job},mark=#{mark},trade=#{trade},follow_time=#{followTime},
+        update_time=#{updateTime}
+
+
+
+    </update>
+    <select id="findByTell" resultType="com.kaishengit.crm.entity.Customer">
+
+        select * from customer where tell=#{tell}
+    </select>
+    <select id="findByAccId" resultType="com.kaishengit.crm.entity.Customer">
+        select* from customer where account_id=#{accountId}
+        <if test="custName !=null and custName != ''">
+           and (cust_name like #{custName} or tell like #{custName})
+        </if>
+    </select>
+
+
+
+
+
+
+</mapper>

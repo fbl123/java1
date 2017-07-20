@@ -17,11 +17,11 @@ public interface AccountService {
 
     Long count();
 
-    Long countByDeptId(Integer id);
+    Long countByDeptId(String id);
 
     Account findByModile(String modile,String password) throws ServiceException;
 
-    List<Account> findByDeptId(Integer id);
+    List<Account> findByDeptId(String id);
 
     void update(String oldPassword, Account acc, Account session) throws ServiceException;
 }

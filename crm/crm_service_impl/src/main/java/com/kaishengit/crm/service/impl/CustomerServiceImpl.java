@@ -1,0 +1,67 @@
+package com.kaishengit.crm.service.impl;
+
+import com.kaishengit.crm.entity.Account;
+import com.kaishengit.crm.entity.Customer;
+import com.kaishengit.crm.mapper.CustomerMapper;
+import com.kaishengit.crm.service.CustomerService;
+import com.kaishengit.exception.ServiceException;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.support.CustomSQLErrorCodesTranslation;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class CustomerServiceImpl implements CustomerService {
+    @Autowired
+    private CustomerMapper customerMapper;
+    @Value("#{'${customer.trade}'.split(',')}")
+    private List<String>  tradeList;
+    @Value("#{'${customer.source}'.split(',')}")
+    private List<String> sourceList;
+
+
+
+    @Override
+    public void save(Customer customer, Account account) throws ServiceException {
+        //查看客户是否存在
+        Customer customer1=customerMapper.findByTell(customer);
+        if(customer1!=null){
+            throw new ServiceException("已存在");
+        }
+        //添加客户
+        customer.setAccountId(account.getId());
+        account.setCreateTime(new Date());
+        customerMapper.save(customer);
+    }
+
+    @Override
+    public List<String> findAllSource() {
+        return sourceList;
+    }
+
+    @Override
+    public List<String> findAllTrade() {
+        return tradeList;
+    }
+
+    @Override
+    public List<Customer> findMyCust(Account account,Map<String,Object> map) {
+        Customer customer=new Customer();
+        customer.setAccountId(account.getId());
+        if(StringUtils.isNotBlank((String) map.get("keyword"))){
+            customer.setCustName("%"+(String) map.get("keyword")+"%");
+
+        }
+        return customerMapper.findByAccId(customer);
+    }
+
+    @Override
+    public void update(Customer customer) {
+        customerMapper.update(customer);
+    }
+}

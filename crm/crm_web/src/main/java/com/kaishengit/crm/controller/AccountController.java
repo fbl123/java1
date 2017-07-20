@@ -47,9 +47,9 @@ public class AccountController {
         String draw=request.getParameter("draw");
         String deptId=request.getParameter("deptId");
 
-        Integer id=null;
+        String id=null;
         if(StringUtils.isNumeric(deptId)){
-            id=Integer.valueOf(deptId);
+            id=deptId;
         }
         //总数
         Long total=accountService.count();

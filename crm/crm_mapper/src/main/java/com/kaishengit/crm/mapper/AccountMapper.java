@@ -19,11 +19,11 @@ public interface AccountMapper {
 
     Long count();
 
-    Long countByDeptId(@Param("id")Integer id);
+    Long countByDeptId(@Param("id")String id);
 
     Account findByModile(String mobile);
 
-    List<Account> findByDeptId(@Param("id") Integer id);
+    List<Account> findByDeptId(@Param("id") String id);
 
     void update(Account account);
 }
