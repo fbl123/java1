@@ -6,12 +6,19 @@ import com.kaishengit.crm.mapper.CustomerMapper;
 import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +98,35 @@ public class CustomerServiceImpl implements CustomerService {
     //将我的客户数据到处Excel
     @Override
     public void export(Account account, OutputStream outputStream) {
+            List<Customer> customerList=findMyCust(account,new HashMap<>());
+        //工作创建表
+        Workbook workbook=new HSSFWorkbook();
+        //创建sheet标签页
+        Sheet sheet=workbook.createSheet("客户信息");
+        //创建数据
+        Row row=sheet.createRow(0);
+        Cell cell=row.createCell(0);
+        cell.setCellValue("客户名字");
+        cell.setCellValue("客户job");
+        cell.setCellValue("客户级别");
+        cell.setCellValue("联系电话");
+        for(int i=1;i<=customerList.size();i++){
+            Customer customer=customerList.get(i-1);
+            Row dateRow=sheet.createRow(i);
+            dateRow.createCell(0).setCellValue(customer.getCustName());
+            dateRow.createCell(1).setCellValue(customer.getJob());
+            dateRow.createCell(2).setCellValue(customer.getLevel());
+            dateRow.createCell(3).setCellValue(customer.getTell());
+        }
+        //将数据写到客户端
+        try{
+            workbook.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
+        }catch (IOException e){
+                throw new ServiceException("到处Excel异常");
+        }
+
 
     }
 }
