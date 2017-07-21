@@ -5,17 +5,20 @@ import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
 import com.kaishengit.crm.exception.NotFoundException;
 import com.kaishengit.crm.exception.NotYouException;
+import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.dto.StringUtil;
 import com.kaishengit.exception.ServiceException;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +28,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private AccountService accountService;
+
 
 
     /**
@@ -43,8 +49,17 @@ public class CustomerController {
       model.addAttribute("keyword",keyword);
         return "customer/my_home";
     }
-
-
+    /**
+     * 到处Excel
+     */
+    @GetMapping("/my/export")
+    public void export(HttpServletResponse response,HttpSession session )throws IOException{
+        Account account= (Account) session.getAttribute("acc");
+        response.setContentType("application/vnd.ms-excel");
+        //设置文件名称
+        response.addHeader("Content-Disposition","attachment;filename=\"customer.xls\"");
+        customerService.export(account,response.getOutputStream());
+    }
     /**
      * 添加客户
      */
@@ -91,11 +106,12 @@ public class CustomerController {
         Account account= (Account) session.getAttribute("acc");
         isMy(account,customer);
         model.addAttribute("customer",customer);
+        model.addAttribute("accountList",accountService.findAll());
        return "customer/info";
     }
 
     /**
-     * 修改
+     * 修改客户信息
      *
      * @param session
      * @return
@@ -118,7 +134,7 @@ public class CustomerController {
         //判断是否属于当前员工
         Account account= (Account) session.getAttribute("acc");
         isMy(account,customer);
-        customerService.update(customer);
+        customerService.update(customer,account,account,"修改客户信息");
         redirectAttributes.addFlashAttribute("message","修改成功");
         return "redirect:/customer/my/"+customer.getId();
 
@@ -144,6 +160,44 @@ public class CustomerController {
         customerService.del(customer);
         return "redirect:/customer/my";
     }
+
+    /**
+     * 将客户放到公海中
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/my/{id:\\d+}/share/public")
+    public String giveUp(@PathVariable String id,HttpSession session,RedirectAttributes redirectAttributes){
+        Customer customer=findByid(id);
+        Account account= (Account) session.getAttribute("acc");
+        isMy(account,customer);
+        customerService.update(customer,account,new Account(),"放入到公海");
+        redirectAttributes.addFlashAttribute("message","已成功将"+customer.getCustName()+"放入公海中");
+        return "redirect:/customer/my";
+    }
+
+    /**
+     * 转交客户
+     * @param
+     * @return
+     */
+    @GetMapping("/my/{custId:\\d+}/tran/{accountId:\\d+}")
+    public String  transfer(HttpSession session,@PathVariable String custId,@PathVariable String accountId,
+                            RedirectAttributes redirectAttributes){
+       //
+        System.out.println("cust-------------"+custId);
+        System.out.println("account---------"+accountId);
+        Customer customer=findByid(custId);
+        Account account= (Account) session.getAttribute("acc");
+        isMy(account,customer);
+       Account account1= accountService.findById(accountId);
+       customerService.update(customer,account,account1,"转交");
+        redirectAttributes.addFlashAttribute("message","成功将客户[ "+customer.getCustName()+" ]转移");
+        return "redirect:/customer/my";
+    }
+
+
 
 
 //判断是否存在客户

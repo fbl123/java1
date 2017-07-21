@@ -54,6 +54,10 @@
 
 
     </select>
+    <select id="findById" resultType="com.kaishengit.crm.entity.Account">
+
+        select * from t_account where id=#{id}
+    </select>
     <resultMap id="findAll" type="Account">
         <id property="id" column="id"/>
         <result column="user_name" property="userName"/>

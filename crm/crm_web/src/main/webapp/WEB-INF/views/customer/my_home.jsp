@@ -63,7 +63,7 @@
                     <h3 class="box-title">我的客户</h3>
                     <div class="box-tools pull-right">
                         <a href="/customer/my/new" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 新增客户</a>
-                        <button class="btn btn-primary btn-sm"><i class="fa fa-file-excel-o"></i> 导出Excel</button>
+                        <a href="/customer/my/export" class="btn btn-primary btn-sm"><i class="fa fa-file-excel-o"></i> 导出Excel</a>
                     </div>
                 </div>
                 <div class="box-body no-padding">
@@ -85,7 +85,8 @@
                         </tr>
                         <c:if test="${empty myCustomer}">
                             <tr>
-                                <td colspan="6">😭你还没有任何客户，加油！💪</td>
+                                <td colspan="6">暂无数据</td>
+                                <%--<td colspan="6">😭你还没有任何客户，加油！💪</td>--%>
                             </tr>
                         </c:if>
                         <c:forEach items="${myCustomer}" var="customer">
@@ -129,18 +130,18 @@
 <script src="/static/plugins/page/jquery.twbsPagination.min.js"></script>
 <script>
     $(function () {
-        <c:if test="${pageInfo.pages > 1}" >
-        //分页
-        $('#pagination-demo').twbsPagination({
-            totalPages: ${pageInfo.pages},
-            visiblePages: 7,
-            first:'首页',
-            last:'末页',
-            prev:'上一页',
-            next:'下一页',
-            href:"?p={{number}}"
-        });
-        </c:if>
+        <%--<c:if test="${pageInfo.pages > 1}" >--%>
+        <%--//分页--%>
+        <%--$('#pagination-demo').twbsPagination({--%>
+            <%--totalPages: ${pageInfo.pages},--%>
+            <%--visiblePages: 7,--%>
+            <%--first:'首页',--%>
+            <%--last:'末页',--%>
+            <%--prev:'上一页',--%>
+            <%--next:'下一页',--%>
+            <%--href:"?p={{number}}"--%>
+        <%--});--%>
+        <%--</c:if>--%>
         $(".customer_row").click(function () {
             var id = $(this).attr("rel");
             window.location.href = "/customer/my/"+id;

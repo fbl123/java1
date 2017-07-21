@@ -24,4 +24,6 @@ public interface AccountService {
     List<Account> findByDeptId(String id);
 
     void update(String oldPassword, Account acc, Account session) throws ServiceException;
+
+    Account findById(String id);
 }

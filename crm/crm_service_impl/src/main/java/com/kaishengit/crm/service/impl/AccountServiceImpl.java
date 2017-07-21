@@ -1,5 +1,4 @@
 package com.kaishengit.crm.service.impl;
-
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.AccountDept;
 import com.kaishengit.crm.mapper.AccountDeptMapper;
@@ -109,6 +108,17 @@ public class AccountServiceImpl implements AccountService {
         account.setPassword(DigestUtils.md5Hex(acc.getPassword()+salt));
         account.setUpdateTime(new Date());
         accountMapper.update(account);
+
+    }
+
+    @Override
+    public Account findById(String id) {
+        Account account=accountMapper.findById(id);
+        if(account==null){
+            throw new ServiceException("该员工不存在");
+        }
+        return account;
+
 
     }
 

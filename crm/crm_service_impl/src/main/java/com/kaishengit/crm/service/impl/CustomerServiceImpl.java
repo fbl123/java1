@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void update(Customer customer) {
+    public void update(Customer customer,Account oldAccount,Account account,String state) {
+        customer.setAccountId(account.getId());
         customer.setUpdateTime(new Date());
         customerMapper.update(customer);
     }
@@ -77,5 +79,18 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         customerMapper.del(customer);
+    }
+//将客户放入到公海中
+    @Override
+    public void seas(Customer customer) {
+
+        customer.setAccountId(0);
+        customerMapper.update(customer);
+    }
+
+    //将我的客户数据到处Excel
+    @Override
+    public void export(Account account, OutputStream outputStream) {
+
     }
 }

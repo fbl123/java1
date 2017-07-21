@@ -41,8 +41,10 @@ public class LoginController {
         }
        try{
            Account account=accountService.findByModile(mobile,password);
-           session.setAttribute("acc",account);
-           return Result.success(callback,account);
+
+               session.setAttribute("acc",account);
+               return Result.success(callback,account);
+
        }catch(ServiceException e){
            return Result.error(e.getMessage());
         }

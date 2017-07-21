@@ -26,4 +26,6 @@ public interface AccountMapper {
     List<Account> findByDeptId(@Param("id") String id);
 
     void update(Account account);
+
+    Account findById(String id);
 }
