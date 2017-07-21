@@ -62,6 +62,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void update(Customer customer) {
+        customer.setUpdateTime(new Date());
         customerMapper.update(customer);
     }
 

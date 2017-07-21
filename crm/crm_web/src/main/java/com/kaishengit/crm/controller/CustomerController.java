@@ -87,12 +87,9 @@ public class CustomerController {
     //
     @GetMapping("/my/{id}")
     public String update(Model model,HttpSession session,@PathVariable String id){
-        System.out.println(id);
         Customer customer=findByid(id);
         Account account= (Account) session.getAttribute("acc");
         isMy(account,customer);
-        System.out.println("cust-----------"+customer.getAccountId());
-        System.out.println("acc----------------"+account.getId());
         model.addAttribute("customer",customer);
        return "customer/info";
     }
@@ -108,8 +105,6 @@ public class CustomerController {
         Customer customer=findByid(id);
         Account account= (Account) session.getAttribute("acc");
         isMy(account,customer);
-        System.out.println("cust-----------"+customer.getAccountId());
-        System.out.println("acc----------------"+account.getId());
         model.addAttribute("customer",customer);
         model.addAttribute("tradeList",customerService.findAllTrade());
         model.addAttribute("sourceList",customerService.findAllSource());
@@ -123,8 +118,6 @@ public class CustomerController {
         //判断是否属于当前员工
         Account account= (Account) session.getAttribute("acc");
         isMy(account,customer);
-        System.out.println("cust-----------"+customer.getAccountId());
-        System.out.println("acc----------------"+account.getId());
         customerService.update(customer);
         redirectAttributes.addFlashAttribute("message","修改成功");
         return "redirect:/customer/my/"+customer.getId();

@@ -12,9 +12,9 @@
         #{level},#{trade},#{followTime},#{source},#{creatTime},#{updateTime},#{sex})
     </insert>
     <update id="update">
-        update customer set
-        account_id=#{accountId},address=#{address},tell=#{tell},
-        job=#{job},mark=#{mark},trade=#{trade},follow_time=#{followTime},
+        update customer set cust_name=#{custName},
+        account_id=#{accountId},address=#{address},tell=#{tell},level=#{level},
+        job=#{job},mark=#{mark},trade=#{trade},follow_time=#{followTime},sex=#{sex},
         update_time=#{updateTime} where id=#{id}
 
 
