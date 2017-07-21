@@ -19,4 +19,7 @@ public interface CustomerMapper {
     Customer findById(String id);
 
     void del(Customer customer);
+
+    List<Customer> findPublic();
+
 }

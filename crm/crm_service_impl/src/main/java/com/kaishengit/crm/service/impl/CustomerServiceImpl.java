@@ -1,5 +1,7 @@
 package com.kaishengit.crm.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
 import com.kaishengit.crm.mapper.CustomerMapper;
@@ -105,11 +107,11 @@ public class CustomerServiceImpl implements CustomerService {
         Sheet sheet=workbook.createSheet("客户信息");
         //创建数据
         Row row=sheet.createRow(0);
-        Cell cell=row.createCell(0);
-        cell.setCellValue("客户名字");
-        cell.setCellValue("客户job");
-        cell.setCellValue("客户级别");
-        cell.setCellValue("联系电话");
+
+        row.createCell(0).setCellValue("客户名字");
+        row.createCell(1).setCellValue("客户job");
+        row.createCell(2).setCellValue("客户级别");
+        row.createCell(3).setCellValue("联系电话");
         for(int i=1;i<=customerList.size();i++){
             Customer customer=customerList.get(i-1);
             Row dateRow=sheet.createRow(i);
@@ -129,4 +131,13 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     }
+
+    @Override
+    public PageInfo<Customer> findCustomerByNull(Integer pageNo,Integer pageSize) {
+        PageHelper.startPage(pageNo,pageSize);
+        List<Customer> list=customerMapper.findPublic();
+        return new PageInfo<>(list);
+    }
+
+
 }

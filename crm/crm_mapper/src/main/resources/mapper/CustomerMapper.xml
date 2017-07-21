@@ -38,6 +38,11 @@
 
         select * from customer where id=#{id}
     </select>
+    <select id="findPublic" resultType="com.kaishengit.crm.entity.Customer">
+        select * from customer where account_id is NULL
+
+
+    </select>
 
 
 </mapper>

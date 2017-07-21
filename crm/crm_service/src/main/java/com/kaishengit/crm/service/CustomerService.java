@@ -1,5 +1,6 @@
 package com.kaishengit.crm.service;
 
+import com.github.pagehelper.PageInfo;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
 import com.kaishengit.exception.ServiceException;
@@ -25,4 +26,7 @@ public interface CustomerService {
     void seas(Customer customer);
 
     void export(Account account, OutputStream outputStream);
+
+    PageInfo<Customer> findCustomerByNull(Integer pageNo,Integer PageSize);
+
 }

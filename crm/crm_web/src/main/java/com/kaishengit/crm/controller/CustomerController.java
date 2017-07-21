@@ -1,5 +1,6 @@
 package com.kaishengit.crm.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
@@ -9,6 +10,7 @@ import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.dto.StringUtil;
 import com.kaishengit.exception.ServiceException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -184,9 +186,6 @@ public class CustomerController {
     @GetMapping("/my/{custId:\\d+}/tran/{accountId:\\d+}")
     public String  transfer(HttpSession session,@PathVariable String custId,@PathVariable String accountId,
                             RedirectAttributes redirectAttributes){
-       //
-        System.out.println("cust-------------"+custId);
-        System.out.println("account---------"+accountId);
         Customer customer=findByid(custId);
         Account account= (Account) session.getAttribute("acc");
         isMy(account,customer);
@@ -216,6 +215,19 @@ public class CustomerController {
     }
 
 
+    /**
+     * 显示公海客户
+     */
+    @GetMapping("/public")
+    public String shared(Model model,Integer p,Integer pageSize){
+        Integer size=10;
+        if(StringUtils.isNumeric(pageSize.toString())){
+            size=pageSize;
+        }
+        PageInfo<Customer> customerList=customerService.findCustomerByNull(p,size);
+        model.addAttribute("customerList",customerList);
+        return "";
+    }
 
 }
 
