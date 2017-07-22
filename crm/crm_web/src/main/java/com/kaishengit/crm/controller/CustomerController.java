@@ -11,6 +11,7 @@ import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.dto.StringUtil;
 import com.kaishengit.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +52,7 @@ public class CustomerController {
         return "customer/my_home";
     }
     /**
-     * 到处Excel
+     * 到出Excel
      */
     @GetMapping("/my/export")
     public void export(HttpServletResponse response,HttpSession session )throws IOException{
@@ -219,14 +220,15 @@ public class CustomerController {
      * 显示公海客户
      */
     @GetMapping("/public")
-    public String shared(Model model,Integer p,Integer pageSize){
-        Integer size=10;
-        if(StringUtils.isNumeric(pageSize.toString())){
-            size=pageSize;
-        }
-        PageInfo<Customer> customerList=customerService.findCustomerByNull(p,size);
+    public String shared(Model model,@RequestParam(required = false,defaultValue="1",value = "p") Integer p,
+                        String keyword){
+        Integer size=3;
+
+        PageInfo<Customer> customerList=customerService.findCustomerByNull(p,size,keyword);
+
         model.addAttribute("customerList",customerList);
-        return "";
+        model.addAttribute("keyword",keyword);
+        return "customer/public";
     }
 
 }

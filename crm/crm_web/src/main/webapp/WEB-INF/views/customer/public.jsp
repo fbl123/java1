@@ -37,7 +37,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
     <jsp:include page="../base/base-side.jsp">
-        <jsp:param name="active" value="customer_my"/>
+        <jsp:param name="active" value="public"/>
     </jsp:include>
     <!-- 右侧内容部分 -->
     <div class="content-wrapper">
@@ -83,13 +83,13 @@
                             <th>级别</th>
                             <th>联系方式</th>
                         </tr>
-                        <c:if test="${empty myCustomer}">
+                        <c:if test="${empty customerList.list}">
                             <tr>
                                 <td colspan="6">暂无数据</td>
                                 <%--<td colspan="6">😭你还没有任何客户，加油！💪</td>--%>
                             </tr>
                         </c:if>
-                        <c:forEach items="${myCustomer}" var="customer">
+                        <c:forEach items="${customerList.list}" var="customer">
                             <tr rel="${customer.id}" class="customer_row">
                                 <td><span class="name-avatar" style="background-color:${customer.sex == '先生' ? '#ccc' : 'pink'};">${fn:substring(customer.custName,0,1)}</span></td>
                                 <td>
@@ -107,7 +107,7 @@
 
                 </div>
                 <!-- /.box-body -->
-                <c:if test="${pageInfo.pages > 1}" >
+                <c:if test="${customerList.pages > 1}" >
                     <div class="box-footer">
                         <ul id="pagination-demo" class="pagination-sm pull-right"></ul>
                     </div>
@@ -130,18 +130,18 @@
 <script src="/static/plugins/page/jquery.twbsPagination.min.js"></script>
 <script>
     $(function () {
-        <%--<c:if test="${pageInfo.pages > 1}" >--%>
-        <%--//分页--%>
-        <%--$('#pagination-demo').twbsPagination({--%>
-            <%--totalPages: ${pageInfo.pages},--%>
-            <%--visiblePages: 7,--%>
-            <%--first:'首页',--%>
-            <%--last:'末页',--%>
-            <%--prev:'上一页',--%>
-            <%--next:'下一页',--%>
-        <%--href:"?p={{number}}&&keyword=${keyword}"--%>
-        <%--});--%>
-        <%--</c:if>--%>
+        <c:if test="${customerList.pages > 1}" >
+        //分页
+        $('#pagination-demo').twbsPagination({
+            totalPages: ${customerList.pages},
+            visiblePages: 7,
+            first:'首页',
+            last:'末页',
+            prev:'上一页',
+            next:'下一页',
+            href:"?p={{number}}&&keyword=${keyword}"
+        });
+        </c:if>
         $(".customer_row").click(function () {
             var id = $(this).attr("rel");
             window.location.href = "/customer/my/"+id;

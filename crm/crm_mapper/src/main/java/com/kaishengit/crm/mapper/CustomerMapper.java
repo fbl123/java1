@@ -2,6 +2,8 @@ package com.kaishengit.crm.mapper;
 
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
+import net.sf.jsqlparser.statement.select.First;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,6 +22,6 @@ public interface CustomerMapper {
 
     void del(Customer customer);
 
-    List<Customer> findPublic();
+    List<Customer> findPublic(@Param("keyword") String keyword);
 
 }

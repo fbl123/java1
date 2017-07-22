@@ -40,8 +40,12 @@
     </select>
     <select id="findPublic" resultType="com.kaishengit.crm.entity.Customer">
         select * from customer where account_id is NULL
+        <if test="keyword !=null and keyword !=''" >
 
-
+            and
+            (cust_name like concat('%',#{keyword},'%') or
+            tell like concat('%',#{keyword},'%'))
+        </if>
     </select>
 
 

@@ -133,9 +133,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public PageInfo<Customer> findCustomerByNull(Integer pageNo,Integer pageSize) {
+    public PageInfo<Customer> findCustomerByNull(Integer pageNo,Integer pageSize,String keyword) {
         PageHelper.startPage(pageNo,pageSize);
-        List<Customer> list=customerMapper.findPublic();
+        List<Customer> list=customerMapper.findPublic(keyword);
         return new PageInfo<>(list);
     }
 

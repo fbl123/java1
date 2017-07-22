@@ -27,6 +27,6 @@ public interface CustomerService {
 
     void export(Account account, OutputStream outputStream);
 
-    PageInfo<Customer> findCustomerByNull(Integer pageNo,Integer PageSize);
+    PageInfo<Customer> findCustomerByNull(Integer pageNo,Integer PageSize,String keyword);
 
 }
