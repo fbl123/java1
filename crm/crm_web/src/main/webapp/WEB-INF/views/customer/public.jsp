@@ -37,7 +37,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
     <jsp:include page="../base/base-side.jsp">
-        <jsp:param name="active" value="public"/>
+        <jsp:param name="active" value="customer_public"/>
     </jsp:include>
     <!-- 右侧内容部分 -->
     <div class="content-wrapper">
@@ -60,9 +60,9 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">我的客户</h3>
+                    <h3 class="box-title">公海客户</h3>
                     <div class="box-tools pull-right">
-                        <a href="/customer/my/new" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 新增客户</a>
+                        <a href="/customer/public/new" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 新增客户</a>
                         <a href="/customer/my/export" class="btn btn-primary btn-sm"><i class="fa fa-file-excel-o"></i> 导出Excel</a>
                     </div>
                 </div>

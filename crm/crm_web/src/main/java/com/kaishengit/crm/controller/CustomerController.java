@@ -82,7 +82,7 @@ public class CustomerController {
            return "redirect:/customer/my";
        }catch(ServiceException e){
            redirectAttributes.addFlashAttribute("message",e.getMessage());
-           return "customer/my/new";
+           return "redirect:customer/my/new";
        }
 
    /*
@@ -155,10 +155,7 @@ public class CustomerController {
         Account account= (Account) session.getAttribute("acc");
 //        isMy(account,customer);
 
-        if(!account.getId().equals(customer.getAccountId())){
-            throw new NotYouException();
-        }
-
+        isMy(account,customer);
         customerService.del(customer);
         return "redirect:/customer/my";
     }
@@ -207,12 +204,14 @@ public class CustomerController {
         }
         return customer;
     }
-    //判断是否属于该员工
+    //判断是否属于该员工或是公海客户
     public void isMy(Account account,Customer customer){
-        if(account.getId().equals(customer.getAccountId())){
+        if(account.getId().equals(customer.getAccountId())||customer.getAccountId()==null){
             return;
+        }else{
+            throw new NotYouException();
         }
-        throw new NotYouException();
+
     }
 
 
@@ -229,6 +228,27 @@ public class CustomerController {
         model.addAttribute("customerList",customerList);
         model.addAttribute("keyword",keyword);
         return "customer/public";
+    }
+    /**
+     * 添加公海客户
+     */
+    @GetMapping("/public/new")
+    public String newPublic(Model model){
+        model.addAttribute("sourceList",customerService.findAllSource());
+        model.addAttribute("tradeList",customerService.findAllTrade());
+        return "customer/new_public";
+    }
+    @PostMapping("public/new")
+    public String newPublic(Customer customer,RedirectAttributes redirectAttributes){
+        try{
+            customerService.save(customer,new Account());
+            redirectAttributes.addFlashAttribute("message","添加成功");
+            return "redirect:/customer/public";
+        }catch (ServiceException e){
+            redirectAttributes.addFlashAttribute("message",e.getMessage());
+            return "redirect:customer/public/new";
+        }
+
     }
 
 }
