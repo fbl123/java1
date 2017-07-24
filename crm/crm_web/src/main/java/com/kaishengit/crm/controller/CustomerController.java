@@ -52,7 +52,7 @@ public class CustomerController {
         return "customer/my_home";
     }
     /**
-     * 到出Excel
+     * 导出Excel
      */
     @GetMapping("/my/export")
     public void export(HttpServletResponse response,HttpSession session )throws IOException{

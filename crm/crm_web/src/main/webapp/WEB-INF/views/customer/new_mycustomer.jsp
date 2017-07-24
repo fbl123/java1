@@ -90,6 +90,7 @@
                     </form>
                 </div>
                 <div class="box-footer">
+
                     <button class="btn btn-primary" id="saveBtn">保存</button>
                 </div>
                 <!-- /.box-body -->

@@ -64,7 +64,6 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setAccountId(account.getId());
         if(StringUtils.isNotBlank((String) map.get("keyword"))){
             customer.setCustName("%"+(String) map.get("keyword")+"%");
-
         }
 
         return customerMapper.findByAccId(customer);

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.crm.mapper.SaleMapper">
+
+
+    <insert id="save">
+
+
+        insert into sales (sale_Name,description,progress,worth,account_id,customer_id)
+        VALUES
+        (#{saleName},#{description},#{progress},#{worth},#{accountId},#{customerId})
+    </insert>
+    <select id="findMySale" resultType="com.kaishengit.crm.entity.Sale">
+       SELECT
+	s.*, c.cust_name as   `customer.custName`,
+	c.tell AS `customer.tell`,
+	c.follow_time `customer.followTime`,
+	a.user_name AS `account.userName`
+FROM
+	sales s,
+	customer c,
+	t_account a
+WHERE
+	s.account_id = a.id
+AND s.customer_id = c.id
+AND s.account_id = #{id}
+    </select>
+</mapper>
