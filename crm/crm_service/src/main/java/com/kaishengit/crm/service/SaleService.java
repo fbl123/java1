@@ -17,4 +17,15 @@ public interface SaleService {
 
 
     PageInfo<Sale> findMySale(Account account, Map<String,Object> map);
+    /**
+     * 修改销售机会
+     * @param sale
+     */
+    void update(Sale sale);
+
+    /**
+     * 删除销售机会
+     * @param sale
+     */
+    void del(Sale sale);
 }

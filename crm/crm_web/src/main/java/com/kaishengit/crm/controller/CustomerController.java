@@ -4,10 +4,12 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
+import com.kaishengit.crm.entity.Records;
 import com.kaishengit.crm.exception.NotFoundException;
 import com.kaishengit.crm.exception.NotYouException;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.crm.service.CustomerService;
+import com.kaishengit.crm.service.RecordsService;
 import com.kaishengit.dto.StringUtil;
 import com.kaishengit.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +34,8 @@ public class CustomerController {
     private CustomerService customerService;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private RecordsService recordsService;
 
 
 
@@ -99,7 +103,6 @@ public class CustomerController {
 
     /**
      * 显示
-     *
      */
     //
     @GetMapping("/my/{id}")
@@ -109,6 +112,9 @@ public class CustomerController {
         isMy(account,customer);
         model.addAttribute("customer",customer);
         model.addAttribute("accountList",accountService.findAll());
+        //跟进记录
+        List<Records> list=recordsService.findAll(customer,account);
+        model.addAttribute("");
        return "customer/info";
     }
 
@@ -205,7 +211,7 @@ public class CustomerController {
         return customer;
     }
     //判断是否属于该员工或是公海客户
-    public void isMy(Account account,Customer customer){
+    public static void isMy(Account account,Customer customer){
         if(account.getId().equals(customer.getAccountId())||customer.getAccountId()==null){
             return;
         }else{

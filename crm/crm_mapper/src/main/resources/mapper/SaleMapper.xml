@@ -5,13 +5,20 @@
 <mapper namespace="com.kaishengit.crm.mapper.SaleMapper">
 
 
-    <insert id="save">
-
-
-        insert into sales (sale_Name,description,progress,worth,account_id,customer_id)
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into sales (sale_Name,description,progress,worth,account_id,customer_id,create_time,last_time)
         VALUES
-        (#{saleName},#{description},#{progress},#{worth},#{accountId},#{customerId})
+        (#{saleName},#{description},#{progress},#{worth},#{accountId},#{customerId},#{createTime},#{lastTime})
     </insert>
+    <update id="update">
+
+        update sales set progress=#{progress},last_time=#{lastTime} where id=#{id}
+
+
+    </update>
+    <delete id="del">
+        delete from sales where id=#{id}
+    </delete>
     <select id="findMySale" resultType="com.kaishengit.crm.entity.Sale">
        SELECT
 	s.*, c.cust_name as   `customer.custName`,
@@ -26,5 +33,10 @@ WHERE
 	s.account_id = a.id
 AND s.customer_id = c.id
 AND s.account_id = #{id}
+    </select>
+    <select id="findByCustId" resultType="com.kaishengit.crm.entity.Sale">
+
+        select * from sales where sale_id=#{saleId}
+
     </select>
 </mapper>

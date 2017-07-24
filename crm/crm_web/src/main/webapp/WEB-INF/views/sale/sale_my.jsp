@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/fun    ctions" %>--%>
 <%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -59,8 +60,8 @@
                                     <td>${sale.saleName}</td>
                                     <td>${sale.customer.custName}</td>
                                     <td>${sale.worth} (万元)</td>
-                                    <td>${sale.description}</td>
-                                    <td>${sale.customer.followTime}</td>
+                                    <td>${sale.progress}</td>
+                                    <td><fmt:formatDate value="${sale.lastTime}"/></td>
                                     <td></td>
                                 </tr>
 
@@ -91,6 +92,22 @@
 <!-- ./wrapper -->
 
 <%@include file="../base/base-js.jsp"%>
+<script>
+    $(function () {
+        <c:if test="${pageInfo.pages > 1}" >
+        //分页
+        $('#pagination-demo').twbsPagination({
+        totalPages: ${pageInfo.pages},
+        visiblePages: 7,
+        first:'首页',
+        last:'末页',
+        prev:'上一页',
+        next:'下一页',
+        href:"?p={{number}}&&keyword=${keyword}"
+        });
+        </c:if>
+    })
+</script>
 
 </body>
 </html>

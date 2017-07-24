@@ -7,10 +7,6 @@ import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Sale;
 import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.crm.service.SaleService;
-import com.kaishengit.dto.Result;
-import com.kaishengit.dto.StringUtil;
-import com.kaishengit.exception.ServiceException;
-import com.sun.javafx.collections.MappingChange;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -51,8 +46,7 @@ public class SaleController {
     public String save(Sale sale, HttpSession session,RedirectAttributes redirectAttributes){
         Account account= (Account) session.getAttribute("acc");
         sale.setAccountId(account.getId());
-
-            saleService.save(sale);
+        saleService.save(sale);
         redirectAttributes.addFlashAttribute("message","添加成功");
             return "redirect:/sales/my";
 

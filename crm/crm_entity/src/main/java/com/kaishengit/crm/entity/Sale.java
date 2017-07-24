@@ -1,6 +1,8 @@
 package com.kaishengit.crm.entity;
 
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 销售机会
@@ -20,6 +22,27 @@ public class Sale implements Serializable {
     private Integer accountId;
     //客户ID
     private Integer customerId;
+    //创建时间
+    private Date createTime;
+    //最后跟进时间
+    private Date lastTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(Date lastTime) {
+        this.lastTime = lastTime;
+    }
+
     //客户
     private Customer customer;
     //员工
