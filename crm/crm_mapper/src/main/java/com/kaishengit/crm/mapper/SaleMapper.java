@@ -15,9 +15,11 @@ public interface SaleMapper {
     List<Sale> findMySale(Account account);
 
 
-    Sale findByCustId(Customer customer);
+    List<Sale> findByCustId(Customer customer);
 
     void update(Sale sale);
 
     void del(Sale sale);
+
+    Sale findById(@Param("id") String id);
 }

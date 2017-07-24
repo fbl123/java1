@@ -67,7 +67,6 @@
         <result column="mobile" property="mobile"/>
         <collection property="deptName" ofType="Dept">
             <result column="dept_name" property="deptName"/>
-
         </collection>
 
     </resultMap>

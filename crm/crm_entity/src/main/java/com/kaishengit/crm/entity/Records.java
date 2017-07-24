@@ -12,6 +12,15 @@ public class Records {
     private Integer saleId;
     private String text;
     private Date time;
+    private Sale sale;
+
+    public Sale getSale() {
+        return sale;
+    }
+
+    public void setSale(Sale sale) {
+        this.sale = sale;
+    }
 
     public Integer getId() {
         return id;

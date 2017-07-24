@@ -24,9 +24,7 @@ public class RecordsServiceImpl implements RecordsService {
     private SaleMapper saleMapper;
 
     @Override
-    public List<Records> findAll(Customer customer, Account account) {
-        Sale sale= saleMapper.findByCustId(customer);
-
+    public List<Records> findAll(Sale sale) {
         return recordsMapper.findBySaleId(sale);
     }
 

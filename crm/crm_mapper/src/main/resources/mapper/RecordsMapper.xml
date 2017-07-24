@@ -14,7 +14,20 @@
         delete from records where sale_id=#{id}
 
     </delete>
-    <select id="findBySaleId" resultType="com.kaishengit.crm.entity.Records">
-        select * from records where sale_id=#{id}
+    <select id="findBySaleId" resultMap="find">
+        select r.*,s.sales_name from records r,sales s where r.sale_id=s.id
+        and
+        sale_id=#{id}
     </select>
+    <resultMap id="find" type="Records">
+        <id column="id" property="id"/>
+        <result column="sale_id" property="saleId"></result>
+        <result property="text" column="text"/>
+        <result column="time" property="time"/>
+        <association property="sale" javaType="Sale">
+            <id column="id" property="id" />
+            <result column="sales_name" property="saleName" />
+        </association>
+
+    </resultMap>
 </mapper>

@@ -36,6 +36,7 @@
                         <button class="btn bg-orange btn-sm" id="tranBtn"><i class="fa fa-exchange"></i> 转交他人</button>
                         <button rel="${customer.id}" id="sharePublicBtn" class="btn bg-maroon btn-sm"><i class="fa fa-recycle"></i> 放入公海</button>
                         <button id="delBtn" rel="${customer.id}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> 删除</button>
+
                     </div>
                 </div>
                 <div class="box-body no-padding">
@@ -71,7 +72,10 @@
                     </table>
                 </div>
                 <div class="box-footer">
-                    <span style="color: #ccc" class="pull-right">
+                    <%--<c:if test="${not empty customer.reminder}">--%>
+                        <%--<span style="color: #ccc;"><i class="fa fa-exchange"></i> ${customer.reminder}</span>--%>
+                    <%--</c:if>--%>
+                        <span style="color: #ccc" class="pull-right">
                         创建日期：<fmt:formatDate value="${customer.creatTime}" pattern="yyyy-MM-dd HH:mm"/> &nbsp;&nbsp;&nbsp;&nbsp;
                         <c:if test="${not empty customer.updateTime}">
                             最后修改日期：<fmt:formatDate value="${customer.updateTime}" pattern="yyyy-MM-dd HH:mm"/>
@@ -84,10 +88,17 @@
                 <div class="col-md-8">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">跟进记录</h3>
+                            <h3 class="box-title">销售机会</h3>
                         </div>
                         <div class="box-body">
-
+                            <c:if test="${empty records}">
+                                <li class="list-group-item">暂无销售机会</li>
+                            </c:if>
+                            <ul class="list-group">
+                                <c:forEach items="${records}" var="chance">
+                                    <li class="list-group-item"><a href="/sales/my/${chance.id}" target="_blank">${chance.saleName}</a></li>
+                                </c:forEach>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -116,6 +127,7 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
     <div class="modal fade" id="accountModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -139,6 +151,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+
     <%@ include file="../base/base-footer.jsp"%>
 
 </div>
@@ -148,14 +161,16 @@
 <script src="/static/plugins/layer/layer.js"></script>
 <script>
     $(function () {
+
         var custId = ${customer.id};
+
+        //删除客户
         $("#delBtn").click(function () {
             var id = $(this).attr("rel");
             layer.confirm("删除客户会自动删除相关数据，确定吗?",function(){
                 window.location.href = "/customer/my/"+id+"/del";
             });
         });
-
         //放入公海
         $("#sharePublicBtn").click(function () {
             var id = $(this).attr("rel");
@@ -163,8 +178,6 @@
                 window.location.href = "/customer/my/"+id+"/share/public";
             });
         });
-
-
         //转交他人
         $("#tranBtn").click(function () {
             $("#accountModal").modal({
@@ -180,8 +193,6 @@
             }
             window.location.href = "/customer/my/"+custId+"/tran/"+accountId;
         });
-
-
     })
 </script>
 

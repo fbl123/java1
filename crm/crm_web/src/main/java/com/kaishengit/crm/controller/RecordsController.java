@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,14 +31,14 @@ public class RecordsController {
     @Autowired
     private CustomerService customerService;
 
-    CustomerController customerController=new CustomerController();
     /**
      * 显示跟进记录详情
      */
-    @GetMapping("")
-    public String list(Model model, String id, HttpSession session){
+    @GetMapping("/my/{id:\\d+}")
+    public String list(Model model, @PathVariable String id, HttpSession session){
         Account account= (Account) session.getAttribute("acc");
-        Customer customer=customerService.findById(id);
+        Sale sale=saleService.findById(id);
+        Customer customer=customerService.findById(sale.getCustomerId().toString());
         if(customer==null){
             throw new NotFoundException();
         }
@@ -49,7 +50,7 @@ public class RecordsController {
         //返回客户信息
         model.addAttribute("customer",customer);
         //返回跟进记录
-        model.addAttribute("records",recordsSerrvice.findAll(customer,account));
+        model.addAttribute("records",recordsSerrvice.findAll(sale));
         return "";
 
     }

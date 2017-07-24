@@ -2,8 +2,10 @@ package com.kaishengit.crm.service;
 
 import com.github.pagehelper.PageInfo;
 import com.kaishengit.crm.entity.Account;
+import com.kaishengit.crm.entity.Customer;
 import com.kaishengit.crm.entity.Sale;
 import com.kaishengit.exception.ServiceException;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -28,4 +30,11 @@ public interface SaleService {
      * @param sale
      */
     void del(Sale sale);
+
+    Sale findById(String id);
+
+
+    List<Sale> findByAccount(Account account);
+
+    List<Sale> findByCustomer(Customer customer);
 }

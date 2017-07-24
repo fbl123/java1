@@ -5,11 +5,13 @@ import com.google.common.collect.Maps;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
 import com.kaishengit.crm.entity.Records;
+import com.kaishengit.crm.entity.Sale;
 import com.kaishengit.crm.exception.NotFoundException;
 import com.kaishengit.crm.exception.NotYouException;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.crm.service.RecordsService;
+import com.kaishengit.crm.service.SaleService;
 import com.kaishengit.dto.StringUtil;
 import com.kaishengit.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +39,8 @@ public class CustomerController {
     private AccountService accountService;
     @Autowired
     private RecordsService recordsService;
-
+    @Autowired
+    private SaleService saleService;
 
 
     /**
@@ -112,9 +116,10 @@ public class CustomerController {
         isMy(account,customer);
         model.addAttribute("customer",customer);
         model.addAttribute("accountList",accountService.findAll());
-        //跟进记录
-        List<Records> list=recordsService.findAll(customer,account);
-        model.addAttribute("");
+        //销售机会
+        List<Sale> list= saleService.findByCustomer(customer);
+//        List<Records> list=recordsService.findAll(customer,account);
+        model.addAttribute("records",list);
        return "customer/info";
     }
 

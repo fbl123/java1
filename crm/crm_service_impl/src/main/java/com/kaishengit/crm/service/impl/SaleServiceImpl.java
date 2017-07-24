@@ -47,12 +47,12 @@ public class SaleServiceImpl implements SaleService {
         sale.setLastTime(new Date());
         saleMapper.save(sale);
         //更改客户最后跟进记录
-       Customer customer= customerMapper.findById(sale.getCustomerId().toString());
-       customer.setFollowTime(new Date());
-       customerMapper.update(customer);
-       //添加跟进记录
-        Records records=saveRecord(sale);
-        if(records!=null){
+            Customer customer= customerMapper.findById(sale.getCustomerId().toString());
+            customer.setFollowTime(new Date());
+            customerMapper.update(customer);
+            //添加跟进记录
+            Records records=saveRecord(sale);
+            if(records!=null){
             recordsMapper.save(records);
         }
 
@@ -101,6 +101,22 @@ public class SaleServiceImpl implements SaleService {
         saleMapper.del(sale);
 
 
+
+    }
+
+    @Override
+    public Sale findById(String id) {
+        return saleMapper.findById(id);
+    }
+
+    @Override
+    public List<Sale> findByAccount(Account account) {
+        return saleMapper.findMySale(account);
+    }
+
+    @Override
+    public List<Sale> findByCustomer(Customer customer) {
+        return saleMapper.findByCustId(customer);
 
     }
 

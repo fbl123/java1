@@ -36,7 +36,11 @@ AND s.account_id = #{id}
     </select>
     <select id="findByCustId" resultType="com.kaishengit.crm.entity.Sale">
 
-        select * from sales where sale_id=#{saleId}
+        select * from sales where customer_id=#{id}
 
+    </select>
+    <select id="findById" resultType="com.kaishengit.crm.entity.Sale">
+
+        select * from sales where id=#{id}
     </select>
 </mapper>
