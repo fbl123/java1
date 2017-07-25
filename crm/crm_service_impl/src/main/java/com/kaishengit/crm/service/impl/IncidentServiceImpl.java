@@ -47,4 +47,9 @@ public class IncidentServiceImpl implements IncidentService {
     public Incident findById(String id) {
         return incidentMapper.findById(id);
     }
+
+    @Override
+    public List<Incident> findByCustId(Integer id) {
+        return incidentMapper.findByCustId(id);
+    }
 }

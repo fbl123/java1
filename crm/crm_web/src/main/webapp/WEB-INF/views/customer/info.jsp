@@ -6,6 +6,8 @@
 <head>
     <title>凯盛软件CRM-客户详情</title>
     <%@ include file="../base/base-css.jsp"%>
+    <link rel="stylesheet" href="/static/plugins/datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/static/plugins/datepicker/datepicker3.css">
     <style>
         .td_title {
             font-weight: bold;
@@ -106,10 +108,26 @@
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">日程安排</h3>
+                            <div class="box-tools">
+                                <button class="btn btn-sm btn-default" id="showAddTaskModal"><i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
                         <div class="box-body">
-
+                            <ul class="todo-list">
+                                <c:forEach items="${taskList}" var="task">
+                                    <li class="${task.state ? 'done' : ''}">
+                                        <input type="checkbox">
+                                        <span class="text">${task.name}</span>
+                                        <small class="label label-danger"><i class="fa fa-clock-o"></i> ${task.endTime}</small>
+                                        <div class="tools">
+                                            <i class="fa fa-edit"></i>
+                                            <i class="fa fa-trash-o"></i>
+                                        </div>
+                                    </li>
+                                </c:forEach>
+                            </ul>
                         </div>
+
                     </div>
                     <div class="box">
                         <div class="box-header with-border">
@@ -150,7 +168,39 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
+    <%--添加新任务Modal--%>
+    <div class="modal fade" id="taskModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">新增待办事项</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/task/new" method="post" id="saveTaskForm">
+                        <input type="hidden" name="accId" value="${sessionScope.acc.id}">
+                        <input type="hidden" name="custId" value="${customer.id}">
+                        <div class="form-group">
+                            <label>任务名称</label>
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label>完成日期</label>
+                            <input type="text" class="form-control" id="datepicker" name="endTime">
+                        </div>
+                        <div class="form-group">
+                            <label>提醒时间</label>
+                            <input type="text" class="form-control" id="datepicker2" name="reminderTime">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="saveTaskBtn">保存</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <%@ include file="../base/base-footer.jsp"%>
 
@@ -159,6 +209,12 @@
 
 <%@include file="../base/base-js.jsp"%>
 <script src="/static/plugins/layer/layer.js"></script>
+<script src="/static/plugins/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/plugins/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="/static/plugins/moment/moment.js"></script>
+<script src="/static/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="/static/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="/static/plugins/validate/jquery.validate.js"></script>
 <script>
     $(function () {
 
@@ -193,6 +249,62 @@
             }
             window.location.href = "/customer/my/"+custId+"/tran/"+accountId;
         });
+
+
+
+        var picker = $('#datepicker').datepicker({
+            format: "yyyy-mm-dd",
+            language: "zh-CN",
+            autoclose: true,
+            todayHighlight: true,
+            startDate:moment().format("yyyy-MM-dd")
+        });
+        picker.on("changeDate",function (e) {
+            var today = moment().format("YYYY-MM-DD");
+            $('#datepicker2').datetimepicker('setStartDate',today);
+            $('#datepicker2').datetimepicker('setEndDate', e.format('yyyy-mm-dd'));
+        });
+
+
+        var timepicker = $('#datepicker2').datetimepicker({
+            format: "yyyy-mm-dd hh:ii",
+            language: "zh-CN",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        //添加新任务
+        $("#showAddTaskModal").click(function () {
+            $("#taskModal").modal({
+                show:true,
+                backdrop:'static'
+            });
+        });
+        $("#saveTaskBtn").click(function () {
+            $("#saveTaskForm").submit();
+        });
+        $("#saveTaskForm").validate({
+            errorClass:"text-danger",
+            errorElement:"span",
+            rules:{
+                title:{
+                    required:true
+                },
+                finishTime:{
+                    required:true
+                }
+            },
+            messages:{
+                title:{
+                    required:"请输入任务内容"
+                },
+                finishTime:{
+                    required:"请选择完成时间"
+                }
+            }
+        });
+
+
     })
 </script>
 

@@ -4,13 +4,11 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
+import com.kaishengit.crm.entity.Incident;
 import com.kaishengit.crm.entity.Sale;
 import com.kaishengit.crm.exception.NotFoundException;
 import com.kaishengit.crm.exception.NotYouException;
-import com.kaishengit.crm.service.AccountService;
-import com.kaishengit.crm.service.CustomerService;
-import com.kaishengit.crm.service.RecordsService;
-import com.kaishengit.crm.service.SaleService;
+import com.kaishengit.crm.service.*;
 import com.kaishengit.dto.StringUtil;
 import com.kaishengit.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,8 @@ public class CustomerController {
     private RecordsService recordsService;
     @Autowired
     private SaleService saleService;
+    @Autowired
+    private  IncidentService incidentService;
 
 
     /**
@@ -114,8 +114,12 @@ public class CustomerController {
         model.addAttribute("accountList",accountService.findAll());
         //销售机会
         List<Sale> list= saleService.findByCustomer(customer);
-//        List<Records> list=recordsService.findAll(customer,account);
         model.addAttribute("records",list);
+        //日程安排
+        List<Incident> list1= incidentService.findByCustId(customer.getId());
+        model.addAttribute("taskList",list1);
+        //TODO 相关资料
+
        return "customer/info";
     }
 

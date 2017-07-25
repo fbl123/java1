@@ -46,4 +46,7 @@
         select * from incident where id= #{id}
 
     </select>
+    <select id="findByCustId" resultType="com.kaishengit.crm.entity.Incident">
+        select * from incident where cust_id=#{custid} and state=0
+    </select>
 </mapper>

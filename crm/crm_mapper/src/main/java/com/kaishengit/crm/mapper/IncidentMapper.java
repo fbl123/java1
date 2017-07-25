@@ -22,4 +22,7 @@ public interface IncidentMapper {
     void updateByCust(Customer customer);
 
     Incident findById(@Param("id") String id);
+
+    List<Incident> findByCustId(@Param("custid") Integer id);
+
 }

@@ -14,4 +14,6 @@ public interface IncidentService {
     void update(Incident incident);
 
     Incident findById(String id);
+
+    List<Incident> findByCustId(Integer id);
 }
