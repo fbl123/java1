@@ -22,4 +22,6 @@ public interface SaleMapper {
     void del(Sale sale);
 
     Sale findById(@Param("id") String id);
+
+    void delById(String id);
 }

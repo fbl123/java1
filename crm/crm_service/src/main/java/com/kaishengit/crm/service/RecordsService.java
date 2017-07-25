@@ -13,4 +13,5 @@ public interface RecordsService {
     List<Records> findAll(Sale sale);
 
 
+    void save(Records records);
 }

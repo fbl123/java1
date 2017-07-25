@@ -19,6 +19,9 @@
     <delete id="del">
         delete from sales where id=#{id}
     </delete>
+    <delete id="delById">
+        delete from sales where id=#{id}
+    </delete>
     <select id="findMySale" resultType="com.kaishengit.crm.entity.Sale">
        SELECT
 	s.*, c.cust_name as   `customer.custName`,
@@ -40,7 +43,7 @@ AND s.account_id = #{id}
 
     </select>
     <select id="findById" resultType="com.kaishengit.crm.entity.Sale">
+    select * from sales where id=#{id}
 
-        select * from sales where id=#{id}
     </select>
 </mapper>

@@ -14,8 +14,12 @@
         delete from records where sale_id=#{id}
 
     </delete>
+    <delete id="delBySaleId">
+        delete from records where sale_id=#{id}
+
+    </delete>
     <select id="findBySaleId" resultMap="find">
-        select r.*,s.sales_name from records r,sales s where r.sale_id=s.id
+        select r.*,s.sale_name from records r,sales s where r.sale_id=s.id
         and
         sale_id=#{id}
     </select>

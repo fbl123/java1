@@ -20,7 +20,7 @@ public interface SaleService {
 
     PageInfo<Sale> findMySale(Account account, Map<String,Object> map);
     /**
-     * 修改销售机会
+     * 修改进度
      * @param sale
      */
     void update(Sale sale);
@@ -29,7 +29,7 @@ public interface SaleService {
      * 删除销售机会
      * @param sale
      */
-    void del(Sale sale);
+    void del(String id);
 
     Sale findById(String id);
 

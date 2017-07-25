@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/record")
@@ -47,36 +47,43 @@ public class RecordsController {
         }
         //返回进度
         model.addAttribute("progressList",saleService.getProgressList());
+        //返回销售机会
+        model.addAttribute("sale",sale);
         //返回客户信息
         model.addAttribute("customer",customer);
         //返回跟进记录
         model.addAttribute("records",recordsSerrvice.findAll(sale));
-        return "";
+        return "sale/my_chance";
+
+    }
+
+    /**
+     * 更新进度
+     */
+    @PostMapping("/my/{id:\\d+}/progress/update")
+    public String update(@PathVariable("id") String id,String progress){
+        Sale sale=saleService.findById(id);
+        sale.setProgress(progress);
+        saleService.update(sale);
+        return "redirect:/record/my/"+sale.getId();
 
     }
     /**
-     * 更改跟进记录
-     *
+     * 添加跟进记录
      */
-    @PostMapping("")
-    public String update(Sale sale, HttpSession session, Customer customer){
-        Account account= (Account) session.getAttribute("acc");
-
-        if(customer==null){
-            throw new NotFoundException();
-        }
-        if(!customer.getAccountId().equals(account.getId())){
-            throw new NotYouException();
-        }
-       saleService.update(sale);
-        return "";
+    @PostMapping("/my/new/record")
+    public String save(Records records){
+        records.setTime(new Date());
+        recordsSerrvice.save(records);
+        return "redirect:/record/my/"+records.getSaleId();
     }
     /**
      * 删除销售机会
      */
-    @GetMapping("")
-    public String del(Sale sale,HttpSession session){
+    @GetMapping("my/{saleId:\\d+}/del")
+    public String del(@PathVariable("saleId") String id, HttpSession session){
         Account account= (Account) session.getAttribute("acc");
+        Sale sale=saleService.findById(id);
         Customer customer=customerService.findById(sale.getCustomerId().toString());
         if(customer==null){
             throw new NotFoundException();
@@ -84,8 +91,8 @@ public class RecordsController {
         if(!customer.getAccountId().equals(account.getId())){
             throw new NotYouException();
         }
-        saleService.del(sale);
-        return "";
+        saleService.del(id);
+        return "redirect:/sales/my";
     }
 
 

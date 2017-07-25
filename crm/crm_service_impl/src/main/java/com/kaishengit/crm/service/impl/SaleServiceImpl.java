@@ -83,22 +83,23 @@ public class SaleServiceImpl implements SaleService {
         customer.setFollowTime(new Date());
         customerMapper.update(customer);
         //添加跟进记录
-        Records records=saveRecord(sale);
-        if(records!=null){
-            recordsMapper.save(records);
-        }
+        Records records=new Records();
+        records.setTime(new Date());
+        records.setText("将当前进度修改为：["+ sale.getProgress() +"]");
+        records.setSaleId(sale.getId());
+        recordsMapper.save(records);
 
     }
 
     @Override
     @Transactional
-    public void del(Sale sale) {
+    public void del(String id) {
         //删除所有跟进记录
-        recordsMapper.delBySale(sale);
+        recordsMapper.delBySaleId(id);
         //todo  删除日程安排
         //todo  删除相关资料
         //删除sale
-        saleMapper.del(sale);
+        saleMapper.delById(id);
 
 
 
