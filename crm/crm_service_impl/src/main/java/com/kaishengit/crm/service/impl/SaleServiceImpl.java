@@ -2,14 +2,8 @@ package com.kaishengit.crm.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.kaishengit.crm.entity.Account;
-import com.kaishengit.crm.entity.Customer;
-import com.kaishengit.crm.entity.Records;
-import com.kaishengit.crm.entity.Sale;
-import com.kaishengit.crm.mapper.AccountMapper;
-import com.kaishengit.crm.mapper.CustomerMapper;
-import com.kaishengit.crm.mapper.RecordsMapper;
-import com.kaishengit.crm.mapper.SaleMapper;
+import com.kaishengit.crm.entity.*;
+import com.kaishengit.crm.mapper.*;
 import com.kaishengit.crm.service.SaleService;
 import com.kaishengit.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +24,8 @@ public class SaleServiceImpl implements SaleService {
     private CustomerMapper customerMapper;
     @Autowired
     private RecordsMapper recordsMapper;
+    @Autowired
+    private IncidentMapper incidentMapper;
     @Value("#{'${sale.progress}'.split(',')}")
     private List<String> progressList;
 
@@ -96,7 +91,8 @@ public class SaleServiceImpl implements SaleService {
     public void del(String id) {
         //删除所有跟进记录
         recordsMapper.delBySaleId(id);
-        //todo  删除日程安排
+        //删除日程安排
+        incidentMapper.delBySaleId(id);
         //todo  删除相关资料
         //删除sale
         saleMapper.delById(id);

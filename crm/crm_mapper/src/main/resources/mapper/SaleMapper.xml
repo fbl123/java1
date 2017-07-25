@@ -16,11 +16,17 @@
 
 
     </update>
+    <update id="updateByCust">
+        update sales set account_id=#{account_id} where customer_id=#{id}
+    </update>
     <delete id="del">
         delete from sales where id=#{id}
     </delete>
     <delete id="delById">
         delete from sales where id=#{id}
+    </delete>
+    <delete id="delByCustId">
+        delete from sales where customer_id=#{id}
     </delete>
     <select id="findMySale" resultType="com.kaishengit.crm.entity.Sale">
        SELECT

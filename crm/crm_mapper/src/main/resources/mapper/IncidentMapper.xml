@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.crm.mapper.IncidentMapper">
+
+
+    <insert id="save">
+        insert into incident(sale_id,cust_id,name,end_time,create_time,reminder_time,state,acc_id)
+        values
+        (#{saleId},#{custId},#{name},#{endTime},#{createTime},#{reminderTime},#{state},#{accId})
+
+    </insert>
+     <update id="update">
+        update incident set sale_id=#{saleId},cust_id=#{custId},name=#{name},end_time=#{endTime},
+        reminder_time=#{reminderTime},state=#{state},acc_id=#{accId} where id=#{id}
+    </update>
+    <update id="updateByCust">
+        update incident seta acc_id=#{accountId} where cust_id=#{id}
+    </update>
+    <delete id="delById">
+        delete from incident where id =#{id}
+    </delete>
+    <delete id="delByCustId">
+        delect from incident where cust_id=#{id}
+    </delete>
+    <delete id="delBySaleId">
+        delete from incident where sale_id=#{id}
+    </delete>
+    <select id="findByAccId" resultType="com.kaishengit.crm.entity.Incident">
+       SELECT
+	i.*, c.cust_name `customer.custName`,
+	s.sale_name  `sale.saleName`
+FROM
+	incident i,
+	customer c,
+	sales s
+WHERE
+		i .sale_id = s.id
+AND i.cust_id = c.id
+AND acc_id = #{accid}
+
+    </select>
+</mapper>

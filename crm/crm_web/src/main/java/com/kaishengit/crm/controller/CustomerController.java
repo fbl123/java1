@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
-import com.kaishengit.crm.entity.Records;
 import com.kaishengit.crm.entity.Sale;
 import com.kaishengit.crm.exception.NotFoundException;
 import com.kaishengit.crm.exception.NotYouException;
@@ -14,8 +13,6 @@ import com.kaishengit.crm.service.RecordsService;
 import com.kaishengit.crm.service.SaleService;
 import com.kaishengit.dto.StringUtil;
 import com.kaishengit.exception.ServiceException;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -207,7 +203,7 @@ public class CustomerController {
 
 
 
-//判断是否存在客户
+    //判断是否存在客户
     public Customer findByid(String id){
         Customer customer=customerService.findById(id);
         if(customer==null){

@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
 import com.kaishengit.crm.mapper.CustomerMapper;
+import com.kaishengit.crm.mapper.IncidentMapper;
+import com.kaishengit.crm.mapper.SaleMapper;
 import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +18,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -28,6 +31,10 @@ import java.util.Map;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerMapper customerMapper;
+    @Autowired
+    private SaleMapper saleMapper;
+    @Autowired
+    private IncidentMapper incidentMapper;
     @Value("#{'${customer.trade}'.split(',')}")
     private List<String>  tradeList;
     @Value("#{'${customer.source}'.split(',')}")
@@ -74,6 +81,10 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setAccountId(account.getId());
         customer.setUpdateTime(new Date());
         customerMapper.update(customer);
+        //更新sale表
+        saleMapper.updateByCust(customer);
+        //更新代办事件
+        incidentMapper.updateByCust(customer);
     }
 
     @Override
@@ -82,10 +93,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public void del(Customer customer) {
-        //TODO
-
-
+        //删除对应的事件
+        incidentMapper.delByCustId(customer);
+        //删除对应的Sale
+        saleMapper.delByCustId(customer);
+        //删除客户
         customerMapper.del(customer);
     }
 //将客户放入到公海中

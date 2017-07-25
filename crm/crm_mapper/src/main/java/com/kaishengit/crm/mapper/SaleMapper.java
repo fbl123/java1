@@ -24,4 +24,8 @@ public interface SaleMapper {
     Sale findById(@Param("id") String id);
 
     void delById(String id);
+
+    void delByCustId(Customer customer);
+
+    void updateByCust(Customer customer);
 }

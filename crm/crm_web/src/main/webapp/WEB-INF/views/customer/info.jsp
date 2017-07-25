@@ -96,7 +96,7 @@
                             </c:if>
                             <ul class="list-group">
                                 <c:forEach items="${records}" var="chance">
-                                    <li class="list-group-item"><a href="/sales/my/${chance.id}" target="_blank">${chance.saleName}</a></li>
+                                    <li class="list-group-item"><a href="/record/my/${chance.id}" target="_blank">${chance.saleName}</a></li>
                                 </c:forEach>
                             </ul>
                         </div>
