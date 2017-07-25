@@ -36,6 +36,7 @@
         <guava-version>22.0</guava-version>
         <commons-codec-version>1.10</commons-codec-version>
         <poi-version>3.15</poi-version>
+        <zxing-version>3.3.0</zxing-version>
 
         <crm_entity_version>1.0-SNAPSHOT</crm_entity_version>
         <crm_mapper_version>1.0-SNAPSHOT</crm_mapper_version>
@@ -158,6 +159,12 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
                 <version>${poi-version}</version>
+            </dependency>
+            <!--生成二维码-->
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>javase</artifactId>
+                <version>${zxing-version}</version>
             </dependency>
 
 

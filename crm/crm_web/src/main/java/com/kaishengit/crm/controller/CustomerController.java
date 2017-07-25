@@ -2,6 +2,7 @@ package com.kaishengit.crm.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.google.zxing.WriterException;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
 import com.kaishengit.crm.entity.Incident;
@@ -11,6 +12,7 @@ import com.kaishengit.crm.exception.NotYouException;
 import com.kaishengit.crm.service.*;
 import com.kaishengit.dto.StringUtil;
 import com.kaishengit.exception.ServiceException;
+import com.kaishengit.utils.QrCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -260,6 +263,38 @@ public class CustomerController {
             return "redirect:customer/public/new";
         }
 
+    }
+
+
+
+    /**
+     * 将客户电话生成二维码
+     * 显示客户二维码图片
+     */
+    @GetMapping("/my/qrcode/{id:\\d+}")
+    public void showCustomerQRCode(@PathVariable Integer id,HttpServletResponse response) {
+        Customer customer = customerService.findById(id.toString());
+
+        response.setContentType("image/png");
+
+        //vcard 格式 https://zxing.appspot.com/generator
+        StringBuffer str = new StringBuffer();
+        str.append("BEGIN:VCARD\r\n");
+        str.append("VERSION:3.0\r\n");
+        str.append("N:").append(customer.getCustName()).append("\r\n");
+        str.append("TITLE:").append(customer.getJob()).append("\r\n");
+        str.append("TEL:").append(customer.getTell()).append("\r\n");
+        str.append("ADR:").append(customer.getAddress()).append("\r\n");
+        str.append("END:VCARD\r\n");
+
+        try {
+            OutputStream outputStream = response.getOutputStream();
+            QrCodeUtil.writeToStream(str.toString(), outputStream, 300, 300);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException|WriterException ex) {
+            throw new RuntimeException("渲染二维码失败",ex);
+        }
     }
 
 }
