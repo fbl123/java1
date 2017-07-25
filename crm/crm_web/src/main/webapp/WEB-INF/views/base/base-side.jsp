@@ -111,7 +111,7 @@
                 </ul>
             </li>
             <!-- 待办事项 -->
-            <li class="treeview">
+            <li  class="treeview ${fn:startsWith(param.active, "_") ? 'active' : ''}">
                 <a href="#">
                     <i class="fa fa-calendar"></i> <span>待办事项</span>
                     <span class="pull-right-container">
@@ -119,7 +119,7 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/task"><i class="fa fa-circle-o"></i> 待办列表</a></li>
+                    <li class="${param.active == '_wait' ? 'active' : ''}"><a href="/task"><i class="fa fa-circle-o"></i> 待办列表</a></li>
                     <li><a href=""><i class="fa fa-circle-o"></i> 逾期事项</a></li>
                 </ul>
             </li>

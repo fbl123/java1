@@ -15,11 +15,11 @@ public class Incident {
     //创建时间
     private Date createTime;
     //提醒时间
-    private Date reminderTime;
+    private String reminderTime;
     //必须完成时间
-    private Date endTime;
+    private String endTime;
     //状态
-    private String state;
+    private boolean state;
 
     private Sale sale;
     private Customer customer;
@@ -40,11 +40,27 @@ public class Incident {
         this.customer = customer;
     }
 
-    public String getState() {
+    public String getReminderTime() {
+        return reminderTime;
+    }
+
+    public void setReminderTime(String reminderTime) {
+        this.reminderTime = reminderTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public boolean isState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(boolean state) {
         this.state = state;
     }
 
@@ -96,19 +112,5 @@ public class Incident {
         this.createTime = createTime;
     }
 
-    public Date getReminderTime() {
-        return reminderTime;
-    }
 
-    public void setReminderTime(Date reminderTime) {
-        this.reminderTime = reminderTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
 }

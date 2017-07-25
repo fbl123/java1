@@ -28,17 +28,22 @@
         delete from incident where sale_id=#{id}
     </delete>
     <select id="findByAccId" resultType="com.kaishengit.crm.entity.Incident">
-       SELECT
-	i.*, c.cust_name `customer.custName`,
-	s.sale_name  `sale.saleName`
-FROM
-	incident i,
-	customer c,
-	sales s
-WHERE
-		i .sale_id = s.id
-AND i.cust_id = c.id
-AND acc_id = #{accid}
+        SELECT
+        i.*, c.cust_name `customer.custName`,
+        s.sale_name  `sale.saleName`
+        FROM
+        incident i
+        LEFT JOIN customer AS c ON i.cust_id = c.id
+        left join sales s on i.sale_id=s.id
+        where acc_id=#{accid}
+      <if test="state ==null or state == '' ">
+        and state=0
+    </if>
+    order by end_time
+
+    </select>
+    <select id="findById" resultType="com.kaishengit.crm.entity.Incident">
+        select * from incident where id= #{id}
 
     </select>
 </mapper>

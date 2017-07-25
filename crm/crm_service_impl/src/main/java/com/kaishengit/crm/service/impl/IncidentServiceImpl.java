@@ -4,7 +4,6 @@ import com.kaishengit.crm.entity.Incident;
 import com.kaishengit.crm.mapper.IncidentMapper;
 import com.kaishengit.crm.service.IncidentService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,24 +18,17 @@ public class IncidentServiceImpl implements IncidentService {
 
 
     @Override
-    public void save(Incident incident, String custId, String saleId) {
-        if(StringUtils.isNumeric(custId)){
-            incident.setCustId(new Integer(custId));
-        }
-        if(StringUtils.isNumeric(saleId)){
-            incident.setSaleId(new Integer(saleId));
-        }
+    public void save(Incident incident) {
+
         incident.setCreateTime(new Date());
-        incident.setState("未完成");
+        incident.setState(false);
         incidentMapper.save(incident);
     }
 
     @Override
-    public List<Incident> findByAccId(Integer id) {
+    public List<Incident> findByAccId(Integer id,String show) {
 
-
-
-        return incidentMapper.findByAccId(id);
+        return incidentMapper.findByAccId(id,show);
     }
 
     @Override
@@ -49,5 +41,10 @@ public class IncidentServiceImpl implements IncidentService {
     @Override
     public void update(Incident incident) {
         incidentMapper.update(incident);
+    }
+
+    @Override
+    public Incident findById(String id) {
+        return incidentMapper.findById(id);
     }
 }
