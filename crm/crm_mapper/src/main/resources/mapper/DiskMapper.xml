@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.crm.mapper.DiskMapper">
+    <insert id="save">
+        insert into disk (account_id,name,save_name,type,upload_time,pid,password,md5,size)
+        VALUES
+        (#{accountId},#{name},#{saveName},#{type},#{uploadTime},#{pid},#{password},#{md5},#{size})
+    </insert>
+
+
+    <select id="findByPid" resultType="com.kaishengit.crm.entity.Disk">
+        select * from disk where pid=#{pid}
+
+
+    </select>
+    <select id="findById" resultType="com.kaishengit.crm.entity.Disk">
+        select * from disk where id=#{id}
+    </select>
+    <select id="findByPidAndName" resultType="com.kaishengit.crm.entity.Disk">
+        select * from disk where pid=#{pid} and name=#{name}
+    </select>
+</mapper>
