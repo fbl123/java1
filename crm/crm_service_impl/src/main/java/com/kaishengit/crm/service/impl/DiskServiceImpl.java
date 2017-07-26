@@ -4,6 +4,7 @@ import com.kaishengit.crm.entity.Disk;
 import com.kaishengit.crm.mapper.DiskMapper;
 import com.kaishengit.crm.service.DiskService;
 import com.kaishengit.exception.ServiceException;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -83,11 +84,34 @@ public class DiskServiceImpl implements DiskService {
            String name=disk1.getSaveName();
            //删除数据库
            diskMapper.del(disk1);
-           //删除文件
-           File file=new File(this.file,name);
-           file.delete();
+           if(disk1.getType().equals("file")){
+               //删除文件
+               File file=new File(this.file,name);
+               file.delete();
+           }
+
        }
 
+
+
+    }
+
+    @Override
+    @Transactional
+    public void downLoad(Disk disk, OutputStream outputStream) {
+        String name=disk.getSaveName();
+        try {
+            InputStream inputStream=new FileInputStream(new File(this.file,name));
+            org.apache.commons.io.IOUtils.copy(inputStream,outputStream);
+            outputStream.flush();
+            outputStream.close();
+            inputStream.close();
+
+            disk.setDownLoadCount(disk.getDownLoadCount()+1);
+            diskMapper.update(disk);
+        } catch (IOException e) {
+           throw new ServiceException();
+        }
 
 
     }

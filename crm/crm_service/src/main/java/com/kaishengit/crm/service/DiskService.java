@@ -3,6 +3,7 @@ package com.kaishengit.crm.service;
 import com.kaishengit.crm.entity.Disk;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 public interface DiskService {
@@ -20,4 +21,6 @@ public interface DiskService {
     void update(Disk disk);
 
     void del(Object... disk);
+
+    void downLoad(Disk disk, OutputStream outputStream);
 }

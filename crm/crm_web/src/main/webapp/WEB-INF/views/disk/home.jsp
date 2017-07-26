@@ -66,7 +66,7 @@
                                 <tr><td colspan="4">暂无内容</td></tr>
                             </c:if>
                             <c:forEach items="${diskList}" var="disk">
-                                <tr class="tr" rel="${disk.id}">
+                                <tr class="tr" rel="${disk.id}" file="${disk.type}">
                                     <td width="50" class="file_icon">
                                         <c:choose>
                                             <c:when test="${disk.type == 'dir'}">
@@ -124,7 +124,7 @@
 <script src="/static/plugins/webuploader/webuploader.min.js"></script>
 <script type="text/template" id="trTemplate">
     <%--https://aui.github.io/art-template/--%>
-    <tr class="tr" rel="{{id}}">
+    <tr class="tr" rel="{{id}}" file="{{type}}">
         <td width="80" class="file_icon">
             <? if(type == 'file') { ?>
                 <i class="fa fa-file-o"></i>
@@ -181,7 +181,15 @@
 
         $(document).delegate(".tr","click",function () {
             var id = $(this).attr("rel");
-            window.location.href = "/disk?_="+id;
+            var type=$(this).attr("file");
+            //如果是文件夹进入下一个目录
+            if(type=="dir"){
+                window.location.href = "/disk?_="+id;
+            }else{
+                //如果是文件下载/显示内容
+                window.location.href="/disk/download/"+id;
+            }
+
         });
 
         //文件上传
@@ -200,7 +208,7 @@
         var loadIndex = -1;
         //开始上传
         uploader.on('uploadStart',function (file) {
-            loadIndex = layer.load(2);
+            loadIndex = layer.load(3);
         });
         //上传成功
         uploader.on('uploadSuccess',function (file,resp) {

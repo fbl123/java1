@@ -10,8 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -69,7 +72,7 @@ public class DiskController {
     @GetMapping("/del/{id:\\d+}")
     public String  rename(@PathVariable(name = "id",required = true) Integer id){
         Disk disk=diskService.findById(id.toString());
-        List<Disk> diskList=diskService.findByPid(disk.getPid().toString());
+        List<Disk> diskList=diskService.findByPid(disk.getId().toString());
         if(diskList==null){
             diskService.del(disk);
         }else{
@@ -103,6 +106,18 @@ public class DiskController {
         diskService.upload(disk,input);
         List<Disk> diskList=diskService.findByPid(disk.getPid().toString());
         return Result.success(diskList);
+    }
+    /**
+     * 下载显示
+     */
+    @GetMapping("/download/{id:\\d+}")
+    public void download(@PathVariable(name = "id") Integer id, HttpServletResponse response) throws IOException {
+        Disk disk=diskService.findById(id.toString());
+        OutputStream outputStream=response.getOutputStream();
+        response.addHeader("Content-Disposition", "attachment; filename=\""+ disk.getSaveName());
+        diskService.downLoad(disk,outputStream);
+
+
     }
 
 }
