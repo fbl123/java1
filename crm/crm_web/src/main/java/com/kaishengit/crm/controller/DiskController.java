@@ -47,7 +47,7 @@ public class DiskController {
         if(disk1!=null){
             return Result.error("该文件夹已存在");
         }
-            disk.setType(Disk.TYPE_FILE);
+            disk.setType(Disk.File_DIR);
             diskService.save(disk);
             List<Disk> diskList=diskService.findByPid(disk.getPid().toString());
             return Result.success(diskList);
@@ -59,16 +59,18 @@ public class DiskController {
     @PostMapping("upload")
     @ResponseBody
     public Result upload(MultipartFile file,Integer pid,Integer accountId) throws IOException {
-        String name=file.getName();
+        String name=file.getOriginalFilename();
         long size= file.getSize();
         InputStream input=file.getInputStream();
         String size1=FileUtils.byteCountToDisplaySize(size);
         Disk disk=new Disk();
+        disk.setName(name);
         disk.setAccountId(accountId);
         disk.setPid(pid);
         disk.setSize(size1);
         diskService.upload(disk,input);
-        return Result.success();
+        List<Disk> diskList=diskService.findByPid(disk.getPid().toString());
+        return Result.success(diskList);
     }
 
 }

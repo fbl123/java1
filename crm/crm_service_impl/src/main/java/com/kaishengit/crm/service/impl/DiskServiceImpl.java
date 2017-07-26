@@ -48,6 +48,7 @@ public class DiskServiceImpl implements DiskService {
     @Override
     @Transactional
     public void upload(Disk disk, InputStream input) {
+        System.out.println(disk.getName());
         String saveName= UUID.randomUUID()+disk.getName().substring(disk.getName().lastIndexOf("."));
         disk.setSaveName(saveName);
         disk.setType(Disk.TYPE_FILE);
