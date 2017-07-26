@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -23,7 +24,7 @@ public class DiskController {
 
 
     /**
-     * 显示
+     * 显示文件夹
      */
     @GetMapping
     public String show(Model model,@RequestParam(name = "_",defaultValue = "0") String pid){
@@ -52,6 +53,37 @@ public class DiskController {
             List<Disk> diskList=diskService.findByPid(disk.getPid().toString());
             return Result.success(diskList);
     }
+    /**
+     * 重命名
+     */
+    @PostMapping()
+    public Result rename(Disk disk){
+        disk.setUpdateTime(new Date());
+        diskService.update(disk);
+        List<Disk> diskList=diskService.findByPid(disk.getPid().toString());
+        return Result.success(diskList);
+    }
+    /**
+     * 删除
+     */
+    @GetMapping("/del/{id:\\d+}")
+    public String  rename(@PathVariable(name = "id",required = true) Integer id){
+        Disk disk=diskService.findById(id.toString());
+        List<Disk> diskList=diskService.findByPid(disk.getPid().toString());
+        if(diskList==null){
+            diskService.del(disk);
+        }else{
+            diskList.add(disk);
+            diskService.del(diskList.toArray());
+        }
+
+
+        return "redirect:/disk?_="+disk.getPid();
+
+//        List<Disk> diskList=diskService.findByPid(disk.getPid().toString());
+//        return Result.success(diskList);
+    }
+
     /**
      * 上传文件
      *

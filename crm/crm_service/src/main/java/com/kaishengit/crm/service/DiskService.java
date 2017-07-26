@@ -16,4 +16,8 @@ public interface DiskService {
     void save(Disk disk);
 
     void upload(Disk disk, InputStream input);
+
+    void update(Disk disk);
+
+    void del(Object... disk);
 }

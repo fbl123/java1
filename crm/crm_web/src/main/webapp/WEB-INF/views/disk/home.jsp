@@ -78,7 +78,7 @@
                                         </c:choose>
                                     </td>
                                     <td>${disk.name}</td>
-                                    <td><fmt:formatDate value="${disk.uploadTime}" pattern="MM月DD日"/> </td>
+                                    <td><fmt:formatDate value="${disk.updateTime}" pattern="MM月dd日"/> </td>
                                     <td width="100">
                                         <c:if test="${disk.type == 'file'}">
                                             ${disk.size}
@@ -92,7 +92,7 @@
                                             <ul class="dropdown-menu">
                                                 <li><a href="">打开</a></li>
                                                 <li><a href="#">重命名</a></li>
-                                                <li><a href="#">删除</a></li>
+                                                <li><a href="/disk/del/${disk.id}">删除</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -133,7 +133,7 @@
             <?}?>
         </td>
         <td>{{name}}</td>
-        <td>{{uploadTime}}</td>
+        <td>{{updateTime}}</td>
         <td width="100">{{size}}</td>
         <td width="100">
             <div class="btn-group">
@@ -143,7 +143,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="">下载</a></li>
                     <li><a href="#">重命名</a></li>
-                    <li><a href="#">删除</a></li>
+                    <li><a href="/disk/del/{{id}}">删除</a></li>
                 </ul>
             </div>
         </td>
@@ -166,7 +166,7 @@
                         $("#dataTable").html("");
                         for(var i = 0;i < resp.data.length;i++) {
                             var obj = resp.data[i]; //{id:1,name:'',fileSize:}
-                            obj.updateTime = moment(obj.upload).format("MM月DD日"); //将时间戳格式化
+                            obj.updateTime = moment(obj.updateTime).format("MM月DD日"); //将时间戳格式化
                             var html = template("trTemplate", obj); //将JSON对象传递给模板对象，转换为HTML
                             $("#dataTable").append(html);
                         }
@@ -209,7 +209,7 @@
                 $("#dataTable").html("");
                 for(var i = 0;i < resp.data.length;i++) {
                     var obj = resp.data[i]; //{id:1,name:'',fileSize:}
-                    obj.uploadTime = moment(obj.uploadTime).format("MM月DD日"); //将时间戳格式化
+                    obj.updateTime = moment(obj.updateTime).format("MM月DD日"); //将时间戳格式化
                     var html = template("trTemplate", obj); //将JSON对象传递给模板对象，转换为HTML
                     $("#dataTable").append(html);
                 }

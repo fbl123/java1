@@ -4,10 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kaishengit.crm.mapper.DiskMapper">
     <insert id="save">
-        insert into disk (account_id,name,save_name,type,upload_time,pid,password,md5,size)
+        insert into disk (account_id,name,save_name,type,upload_time,pid,password,md5,size,update_time,down_load_count)
         VALUES
-        (#{accountId},#{name},#{saveName},#{type},#{uploadTime},#{pid},#{password},#{md5},#{size})
+        (#{accountId},#{name},#{saveName},#{type},#{uploadTime},#{pid},#{password},#{md5},#{size},#{updateTime},#{downLoadCount})
     </insert>
+    <update id="update">
+        update disk set name=#{name},update_time=#{updateTime},down_load_count=#{downLoadCount} where id=#{id}
+
+    </update>
+    <delete id="del">
+        delete from disk where id=#{id}
+    </delete>
 
 
     <select id="findByPid" resultType="com.kaishengit.crm.entity.Disk">

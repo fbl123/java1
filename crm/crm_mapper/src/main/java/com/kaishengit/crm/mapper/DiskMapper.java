@@ -13,4 +13,8 @@ public interface DiskMapper {
     Disk findByPidAndName(@Param("name") String name,@Param("pid") Integer pid);
 
     void save(Disk disk);
+
+    void update(Disk disk);
+
+    void del(Disk disk);
 }

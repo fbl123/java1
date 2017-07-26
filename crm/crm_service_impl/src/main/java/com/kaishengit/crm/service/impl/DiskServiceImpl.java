@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -48,12 +47,12 @@ public class DiskServiceImpl implements DiskService {
     @Override
     @Transactional
     public void upload(Disk disk, InputStream input) {
-        System.out.println(disk.getName());
         String saveName= UUID.randomUUID()+disk.getName().substring(disk.getName().lastIndexOf("."));
         disk.setSaveName(saveName);
         disk.setType(Disk.TYPE_FILE);
         disk.setDownLoadCount(0);
         disk.setUploadTime(new Date());
+        disk.setUpdateTime(new Date());
         diskMapper.save(disk);
 
         try {
@@ -66,6 +65,29 @@ public class DiskServiceImpl implements DiskService {
         } catch (IOException e) {
             throw new ServiceException();
         }
+
+
+    }
+
+    @Override
+    public void update(Disk disk) {
+
+        diskMapper.update(disk);
+    }
+
+    @Override
+    @Transactional
+    public void del(Object... disk) {
+       for(int i=0;i<disk.length;i++){
+           Disk disk1= (Disk) disk[i];
+           String name=disk1.getSaveName();
+           //删除数据库
+           diskMapper.del(disk1);
+           //删除文件
+           File file=new File(this.file,name);
+           file.delete();
+       }
+
 
 
     }

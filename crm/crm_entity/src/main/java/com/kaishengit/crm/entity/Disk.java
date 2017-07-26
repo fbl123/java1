@@ -35,6 +35,9 @@ public class Disk {
     private String saveName;
     private Date uploadTime;
     private String password;
+    private Date updateTime;
+    private String md5;
+    private String size;
 
     public String getSize() {
         return size;
@@ -44,11 +47,14 @@ public class Disk {
         this.size = size;
     }
 
-    private String md5;
-    private String size;
 
+    public Date getUpdateTime() {
+        return updateTime;
+    }
 
-
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public Integer getId() {
         return id;
