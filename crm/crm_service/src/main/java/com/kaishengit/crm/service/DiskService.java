@@ -20,7 +20,9 @@ public interface DiskService {
 
     void update(Disk disk);
 
-    void del(Object... disk);
+    void del(Disk disk);
 
     void downLoad(Disk disk, OutputStream outputStream);
+
+    void delByDisk(Disk disk);
 }

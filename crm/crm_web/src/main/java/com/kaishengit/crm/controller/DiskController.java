@@ -72,20 +72,14 @@ public class DiskController {
     @GetMapping("/del/{id:\\d+}")
     public String  rename(@PathVariable(name = "id",required = true) Integer id){
         Disk disk=diskService.findById(id.toString());
-        List<Disk> diskList=diskService.findByPid(disk.getId().toString());
-        if(diskList==null){
-            diskService.del(disk);
-        }else{
-            diskList.add(disk);
-            diskService.del(diskList.toArray());
-        }
-
-
+       diskService.delByDisk(disk);
         return "redirect:/disk?_="+disk.getPid();
 
 //        List<Disk> diskList=diskService.findByPid(disk.getPid().toString());
 //        return Result.success(diskList);
     }
+
+
 
     /**
      * 上传文件
@@ -114,7 +108,12 @@ public class DiskController {
     public void download(@PathVariable(name = "id") Integer id, HttpServletResponse response) throws IOException {
         Disk disk=diskService.findById(id.toString());
         OutputStream outputStream=response.getOutputStream();
-        response.addHeader("Content-Disposition", "attachment; filename=\""+ disk.getSaveName());
+        //设定响应头
+        response.setContentType("application/octet-stream");
+        //设定弹出下载对话框中的文件名
+        //处理中文的文件名 UTF-8 -> ISO8859-1
+        String fileName = new String(disk.getName().getBytes("UTF-8"),"ISO8859-1");
+        response.addHeader("Content-Disposition", "attachment; filename=\""+ fileName);
         diskService.downLoad(disk,outputStream);
 
 

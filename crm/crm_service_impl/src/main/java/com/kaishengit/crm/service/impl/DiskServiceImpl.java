@@ -78,13 +78,13 @@ public class DiskServiceImpl implements DiskService {
 
     @Override
     @Transactional
-    public void del(Object... disk) {
-       for(int i=0;i<disk.length;i++){
-           Disk disk1= (Disk) disk[i];
-           String name=disk1.getSaveName();
+    public void del(Disk disk) {
+
+
+           String name=disk.getSaveName();
            //删除数据库
-           diskMapper.del(disk1);
-           if(disk1.getType().equals("file")){
+           diskMapper.del(disk);
+           if(disk.getType().equals("file")){
                //删除文件
                File file=new File(this.file,name);
                file.delete();
@@ -94,25 +94,48 @@ public class DiskServiceImpl implements DiskService {
 
 
 
-    }
+
 
     @Override
     @Transactional
     public void downLoad(Disk disk, OutputStream outputStream) {
         String name=disk.getSaveName();
         try {
-            InputStream inputStream=new FileInputStream(new File(this.file,name));
-            org.apache.commons.io.IOUtils.copy(inputStream,outputStream);
-            outputStream.flush();
-            outputStream.close();
-            inputStream.close();
+            File file=new File(this.file,name);
+            if(file.exists()){
+                InputStream inputStream=new FileInputStream(file);
+                org.apache.commons.io.IOUtils.copy(inputStream,outputStream);
+                outputStream.flush();
+                outputStream.close();
+                inputStream.close();
 
-            disk.setDownLoadCount(disk.getDownLoadCount()+1);
-            diskMapper.update(disk);
+                disk.setDownLoadCount(disk.getDownLoadCount()+1);
+                diskMapper.update(disk);
+            }else{
+                throw new ServiceException("文件不存在");
+            }
+
         } catch (IOException e) {
            throw new ServiceException();
         }
 
+
+    }
+
+    @Override
+    public void delByDisk(Disk disk) {
+        List<Disk> diskList=diskMapper.findByPid(disk.getId().toString());
+        if(diskList.size()>0){
+            for(Disk d:diskList){
+
+                if(d.getType().equals(Disk.File_DIR)){
+                    delByDisk(d);
+                }else{
+                    del(d);
+                }
+            }
+        }
+        del(disk);
 
     }
 }
