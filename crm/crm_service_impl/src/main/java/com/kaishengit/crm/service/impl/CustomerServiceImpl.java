@@ -109,7 +109,7 @@ public class CustomerServiceImpl implements CustomerService {
         customerMapper.update(customer);
     }
 
-    //将我的客户数据到处Excel
+    //将我的客户数据导出Excel
     @Override
     public void export(Account account, OutputStream outputStream) {
             List<Customer> customerList=findMyCust(account,new HashMap<>());

@@ -97,11 +97,13 @@ public class IncidentServiceImpl implements IncidentService {
      */
     public void unNotify(Incident incident){
 
-        if(StringUtils.isNotBlank(incident.getReminderTime())){
+        if(StringUtils.isNotEmpty(incident.getReminderTime())){
             Scheduler scheduler=schedulerFactoryBean.getScheduler();
             try {
+
                 scheduler.deleteJob(new JobKey("account"+incident.getAccId()
                         +incident.getId(), "weixingrounp"));
+
             } catch (SchedulerException e) {
                throw new ServiceException();
             }
@@ -128,8 +130,8 @@ public class IncidentServiceImpl implements IncidentService {
     @Transactional
     public void update(Incident incident) {
         incidentMapper.update(incident);
-        unNotify(incident);
-        notify(incident);
+//        unNotify(incident);
+//        notify(incident);
     }
 
     @Override

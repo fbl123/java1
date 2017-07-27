@@ -41,10 +41,12 @@ public class SaleServiceImpl implements SaleService {
         sale.setCreateTime(new Date());
         sale.setLastTime(new Date());
         saleMapper.save(sale);
+
         //更改客户最后跟进记录
             Customer customer= customerMapper.findById(sale.getCustomerId().toString());
             customer.setFollowTime(new Date());
             customerMapper.update(customer);
+
             //添加跟进记录
             Records records=saveRecord(sale);
             if(records!=null){
@@ -66,7 +68,7 @@ public class SaleServiceImpl implements SaleService {
     @Override
     @Transactional
     /**
-     * 修改销售机会
+     * 修改销售进度
      * @param sale
      */
     public void update(Sale sale) {

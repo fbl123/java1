@@ -127,7 +127,6 @@ public class DiskServiceImpl implements DiskService {
         List<Disk> diskList=diskMapper.findByPid(disk.getId().toString());
         if(diskList.size()>0){
             for(Disk d:diskList){
-
                 if(d.getType().equals(Disk.File_DIR)){
                     delByDisk(d);
                 }else{

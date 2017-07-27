@@ -11,7 +11,22 @@ public class Incident {
     private Integer custId;
     private Integer accId;
     //代办时间名字
-    private String name;
+    @Override
+    public String toString() {
+        return "Incident{" +
+                "id=" + id +
+                ", saleId=" + saleId +
+                ", custId=" + custId +
+                ", accId=" + accId +
+                ", name='" + name + '\'' +
+                ", createTime=" + createTime +
+                ", reminderTime='" + reminderTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", state=" + state +
+                ", sale=" + sale +
+                ", customer=" + customer +
+                '}';
+    }private String name;
     //创建时间
     private Date createTime;
     //提醒时间

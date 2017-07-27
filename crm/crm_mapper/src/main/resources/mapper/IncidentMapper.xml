@@ -5,7 +5,7 @@
 <mapper namespace="com.kaishengit.crm.mapper.IncidentMapper">
 
 
-    <insert id="save">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into incident(sale_id,cust_id,name,end_time,create_time,reminder_time,state,acc_id)
         values
         (#{saleId},#{custId},#{name},#{endTime},#{createTime},#{reminderTime},#{state},#{accId})
