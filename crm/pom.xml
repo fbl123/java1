@@ -39,6 +39,8 @@
         <zxing-version>3.3.0</zxing-version>
         <commons-io>2.5</commons-io>
         <commons-fileupload>1.3.2</commons-fileupload>
+        <quartz-version>2.2.1</quartz-version>
+        <joda-timae-version>2.9.7</joda-timae-version>
 
         <crm_entity_version>1.0-SNAPSHOT</crm_entity_version>
         <crm_mapper_version>1.0-SNAPSHOT</crm_mapper_version>
@@ -74,6 +76,13 @@
                 <artifactId>spring-context</artifactId>
                 <version>${spring-version}</version>
             </dependency>
+            <!--集成quartz-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-jdbc</artifactId>
@@ -190,6 +199,22 @@
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload}</version>
+            </dependency>
+                <!--定时任务-->
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>${quartz-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz-jobs</artifactId>
+                <version>${quartz-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-timae-version}</version>
             </dependency>
 
 

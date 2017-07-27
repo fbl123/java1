@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--任务类-->
+    <bean id="tellJob" class="com.kaishengit.quartz.jobs.TellJob"/>
+    <!--指定任务 job-->
+    <bean id="jobDetail"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 指定任务类-->
+        <property name="targetObject" ref="tellJob"/>
+        <!--方法(任务)-->
+        <property name="targetMethod" value="hello"/>
+
+    </bean>
+
+    <!--配置Trigger触发器(定时器)-->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+            <property name="jobDetail" ref="jobDetail"/>
+        <!--每15s做一次-->
+        <property name="cronExpression" value="0/15 * * * * ? *"/>
+    </bean>
+
+
+    <!--调度器工厂-->
+    <bean id="stdScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+
+            </list>
+        </property>
+
+    </bean>
+
+
+
+
+
+</beans>
