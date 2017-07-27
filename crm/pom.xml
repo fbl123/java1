@@ -41,6 +41,7 @@
         <commons-fileupload>1.3.2</commons-fileupload>
         <quartz-version>2.2.1</quartz-version>
         <joda-timae-version>2.9.7</joda-timae-version>
+        <cron-util-version>6.0.2</cron-util-version>
 
         <crm_entity_version>1.0-SNAPSHOT</crm_entity_version>
         <crm_mapper_version>1.0-SNAPSHOT</crm_mapper_version>
@@ -177,11 +178,6 @@
                 <artifactId>javase</artifactId>
                 <version>${zxing-version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.kaishengit</groupId>
-                <artifactId>crm_common</artifactId>
-                <version>${crm_common_version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>commons-codec</groupId>
@@ -194,13 +190,14 @@
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io}</version>
             </dependency>
+
             <!--文件上传-->
             <dependency>
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload}</version>
             </dependency>
-                <!--定时任务-->
+            <!--定时任务-->
             <dependency>
                 <groupId>org.quartz-scheduler</groupId>
                 <artifactId>quartz</artifactId>
@@ -216,8 +213,20 @@
                 <artifactId>joda-time</artifactId>
                 <version>${joda-timae-version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.cronutils</groupId>
+                <artifactId>cron-utils</artifactId>
+                <version>${cron-util-version}</version>
+            </dependency>
 
 
+
+
+            <dependency>
+                <groupId>com.kaishengit</groupId>
+                <artifactId>crm_common</artifactId>
+                <version>${crm_common_version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.kaishengit</groupId>
                 <artifactId>crm_entity</artifactId>

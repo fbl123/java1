@@ -28,7 +28,6 @@
         <property name="triggers">
             <list>
                 <ref bean="cronTrigger"/>
-
             </list>
         </property>
 

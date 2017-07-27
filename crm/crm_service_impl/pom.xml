@@ -41,6 +41,10 @@
             <artifactId>quartz-jobs</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.cronutils</groupId>
+            <artifactId>cron-utils</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>commons-codec</groupId>
