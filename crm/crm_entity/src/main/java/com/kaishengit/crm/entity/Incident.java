@@ -19,10 +19,14 @@ public class Incident {
     //必须完成时间
     private String endTime;
     //状态
-    private boolean state;
+    private boolean state=false;
 
     private Sale sale;
     private Customer customer;
+    public boolean getState(){
+        return state;
+    }
+
 
     public Sale getSale() {
         return sale;

@@ -39,7 +39,6 @@ public class IncidentServiceImpl implements IncidentService {
     public void save(Incident incident) {
 
         incident.setCreateTime(new Date());
-        incident.setState(false);
         incidentMapper.save(incident);
         //添加定时任务
         notify(incident);
@@ -51,7 +50,8 @@ public class IncidentServiceImpl implements IncidentService {
      */
     private void notify(Incident incident) {
         //如果有通知时间则添加
-        if(incident.getReminderTime()!=null){
+
+        if(incident.getReminderTime()!=null&&!incident.getState()){
             JobDataMap jobDataMap=new JobDataMap();
             //给account发通知
             jobDataMap.put("account",incident.getAccId());
