@@ -15,6 +15,60 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class WeiXinUtil {
+
+
+    //获取accessToken 地址
+    private static final String ACCESS_TOKEN_URL = "https://qyapi.weixin.qq.com/cgi-bin/" +
+            "gettoken?corpid={0}&corpsecret={1}";
+    //同步创建部门地址
+    private static final String CREATE_DEPT_URL = "https://qyapi.weixin.qq.com/" +
+            "cgi-bin/department/create?access_token={0}";
+    //同步删除部门地址
+    private static final String DELETE_DEPT_URL = "https://qyapi.weixin.qq.com/" +
+            "cgi-bin/department/delete?access_token={0}&id={1}";
+
+    //内部应用
+    public static final String TOKEN_TYPE_ADDRESS_BOOK = "addressBook";
+    //自建应用
+    public static final String TOKEN_TYPE_NORMAL = "";
+
+
+    private static Properties properties=new Properties();
+       //固定值
+       private static  String corpId;
+       //自创应用的
+       private static String secret;
+       //微信内部的(有添加联系人等权限)
+        private static String addressBookSecret;
+        //调用微信API时失败的中文映射关系
+        private static Map<Integer,String> errorCodeMap = new HashMap<>();
+
+        //利用Guava将 accessToken 缓存
+    private LoadingCache<String,String> accessTokenChache= CacheBuilder.newBuilder().
+                expireAfterWrite(2, TimeUnit.HOURS).build(new CacheLoader<String, String>() {
+            @Override
+            public String load(String key) throws Exception {
+                String url;
+                if(key.equals(TOKEN_TYPE_ADDRESS_BOOK)){
+                    //使用内部应用时
+                        url= MessageFormat.format(ACCESS_TOKEN_URL,corpId,addressBookSecret);
+                }else{
+                    //使用自创应用时
+                        url=MessageFormat.format(ACCESS_TOKEN_URL,corpId,secret);
+                }
+                String result = sendGetRequest(url);
+                //josn 转为Map 使用了阿里巴巴的fastJson
+                Map<String,Object> map= JSON.parseObject(result,HashMap.class);
+                Integer errorCode=Integer.valueOf(map.get("errorcode").toString());
+                //0说明成功
+                if(errorCode.equals(0)){
+                        return map.get("access_token").toString();
+                }else{
+                    throw new RuntimeException("获取AccessToken异常，错误码:" +
+                            errorCode + " 错误原因：" + errorCodeMap.get(errorCode));
+                }
+            }
+        });
     static{
         errorCodeMap.put(-1, "系统繁忙");
         errorCodeMap.put(40001 ,"获取access_token时Secret错误，或者access_token无效");
@@ -358,59 +412,6 @@ public class WeiXinUtil {
             e.printStackTrace();
         }
     }
-
-    //获取accessToken 地址
-    private static final String ACCESS_TOKEN_URL = "https://qyapi.weixin.qq.com/cgi-bin/" +
-            "gettoken?corpid={0}&corpsecret={1}";
-    //同步创建部门地址
-    private static final String CREATE_DEPT_URL = "https://qyapi.weixin.qq.com/" +
-            "cgi-bin/department/create?access_token={0}";
-    //同步删除部门地址
-    private static final String DELETE_DEPT_URL = "https://qyapi.weixin.qq.com/" +
-            "cgi-bin/department/delete?access_token={0}&id={1}";
-
-    //内部应用
-    public static final String TOKEN_TYPE_ADDRESS_BOOK = "addressBook";
-    //自建应用
-    public static final String TOKEN_TYPE_NORMAL = "";
-
-
-    private static Properties properties=new Properties();
-       //固定值
-       private static  String corpId;
-       //自创应用的
-       private static String secret;
-       //微信内部的(有添加联系人等权限)
-        private static String addressBookSecret;
-        //调用微信API时失败的中文映射关系
-        private static Map<Integer,String> errorCodeMap = new HashMap<>();
-
-        //利用Guava将 accessToken 缓存
-    private LoadingCache<String,String> accessTokenChache= CacheBuilder.newBuilder().
-                expireAfterWrite(2, TimeUnit.HOURS).build(new CacheLoader<String, String>() {
-            @Override
-            public String load(String key) throws Exception {
-                String url;
-                if(key.equals(TOKEN_TYPE_ADDRESS_BOOK)){
-                    //使用内部应用时
-                        url= MessageFormat.format(ACCESS_TOKEN_URL,corpId,addressBookSecret);
-                }else{
-                    //使用自创应用时
-                        url=MessageFormat.format(ACCESS_TOKEN_URL,corpId,secret);
-                }
-                String result = sendGetRequest(url);
-                //josn 转为Map 使用了阿里巴巴的fastJson
-                Map<String,Object> map= JSON.parseObject(result,HashMap.class);
-                Integer errorCode=Integer.valueOf(map.get("errorcode").toString());
-                //0说明成功
-                if(errorCode.equals(0)){
-                        return map.get("access_token").toString();
-                }else{
-                    throw new RuntimeException("获取AccessToken异常，错误码:" +
-                            errorCode + " 错误原因：" + errorCodeMap.get(errorCode));
-                }
-            }
-        });
 
     /**
      * 获取accessToken
