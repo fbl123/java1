@@ -78,23 +78,23 @@ public class IncidentServiceImpl implements IncidentService {
                     .withDoW(questionMark())   //周  （不限制）
                     .instance();
             CronScheduleBuilder scheduleBuilder=CronScheduleBuilder.cronSchedule(cron.asString());
-            Trigger trigger=TriggerBuilder.newTrigger().withSchedule(scheduleBuilder).build();
-            try {
-                scheduler.scheduleJob(jobDetail,trigger);
-                scheduler.start();
-            } catch (SchedulerException e) {
-              throw new ServiceException();
+                Trigger trigger=TriggerBuilder.newTrigger().withSchedule(scheduleBuilder).build();
+                try {
+                    scheduler.scheduleJob(jobDetail,trigger);
+                    scheduler.start();
+                } catch (SchedulerException e) {
+                    throw new ServiceException();
+                }
+
             }
-
         }
-    }
 
-    /**
-     * 取消通知
-     * @param
-     * @param
-     * @return
-     */
+        /**
+         * 取消通知
+         * @param
+         * @param
+         * @return
+         */
     public void unNotify(Incident incident){
 
         if(StringUtils.isNotEmpty(incident.getReminderTime())){
@@ -105,7 +105,7 @@ public class IncidentServiceImpl implements IncidentService {
                         +incident.getId(), "weixingrounp"));
 
             } catch (SchedulerException e) {
-               throw new ServiceException();
+                throw new ServiceException();
             }
 
         }
