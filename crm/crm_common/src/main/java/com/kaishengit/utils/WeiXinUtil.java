@@ -26,6 +26,17 @@ public class WeiXinUtil {
     //同步删除部门地址
     private static final String DELETE_DEPT_URL = "https://qyapi.weixin.qq.com/" +
             "cgi-bin/department/delete?access_token={0}&id={1}";
+    //创建员工
+    private static final String CREATE_ACCOUNT_URL="https://qyapi.weixin.qq.com/cgi-bin/user/create?access_token={0}";
+    //删除员工
+    private static final String DELETE_ACCOUNT_URL = "https://qyapi.weixin.qq.com/cgi-bin/user/delete?" +
+            "access_token={0}&userid={1}";
+    //发送消息
+    private static final String SEND_MESSAGE_URL = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={0}";
+
+
+
+
 
     //内部应用
     public static final String TOKEN_TYPE_ADDRESS_BOOK = "addressBook";
@@ -38,7 +49,9 @@ public class WeiXinUtil {
        private static  String corpId;
        //自创应用的
        private static String secret;
-       //微信内部的(有添加联系人等权限)
+       //企业应用的ID
+     private static String agentId;
+       //操作通讯录
         private static String addressBookSecret;
         //调用微信API时失败的中文映射关系
         private static Map<Integer,String> errorCodeMap = new HashMap<>();
@@ -423,6 +436,98 @@ public class WeiXinUtil {
             return accessTokenChache.get(type);
         }catch (Exception e){
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 创建员工
+     * @param userId 员工ID
+     * @param userName 员工姓名
+     * @param deptIds 所在部门id数组
+     * @param mobile 手机号码
+     */
+    public void createAccount(int userId,String userName,Integer[] deptIds,String mobile) {
+        String url = MessageFormat.format(CREATE_ACCOUNT_URL,getAccessToken(TOKEN_TYPE_ADDRESS_BOOK));
+        Map<String,Object> param = Maps.newHashMap();
+        param.put("userid",userId);
+        param.put("name",userName);
+        param.put("mobile",mobile);
+        param.put("department",deptIds);
+
+        String result = sendPostRequest(url,param);
+        //JSON -> Map
+        Map<String,Object> map = JSON.parseObject(result, HashMap.class);
+        Integer errorCode = Integer.valueOf(map.get("errcode").toString());
+        if(!errorCode.equals(0)) {
+            throw new RuntimeException("创建用户异常，错误码:" + errorCode + " 错误原因：" + errorCodeMap.get(errorCode));
+        }
+
+    }
+    /**
+     * 删除员工
+     * @param accountId 员工ID
+     */
+    public void deleteAccountById(String accountId) {
+        String url = MessageFormat.format(DELETE_ACCOUNT_URL,getAccessToken(TOKEN_TYPE_ADDRESS_BOOK),accountId);
+        String result = sendGetRequest(url);
+        //JSON -> Map
+        Map<String,Object> map = JSON.parseObject(result, HashMap.class);
+        Integer errorCode = Integer.valueOf(map.get("errcode").toString());
+        if(!errorCode.equals(0)) {
+            throw new RuntimeException("删除用户异常，错误码:" + errorCode + " 错误原因：" + errorCodeMap.get(errorCode));
+        }
+    }
+    /**
+     * 给指定员工发送文本消息
+     * @param userIds 接受消息的员工ID
+     * @param message 消息内容
+     */
+    public void sendTextMessageToUser(String message,String... userIds) {
+        StringBuilder sb = new StringBuilder("");
+        for(String id : userIds) {
+            sb.append(id).append("|");
+        }
+        String idStr = sb.toString();
+        idStr = idStr.substring(0,idStr.length()-1);
+        sendTextMessage(message,"toUser",idStr);
+    }
+    /**
+     * 给指定部门发送文本消息
+     * @param deptIds 接受消息的部门ID
+     * @param message 消息内容
+     */
+    public void sendTextMessageToDept(String message,String... deptIds) {
+        StringBuilder sb = new StringBuilder("");
+        for(String id : deptIds) {
+            sb.append(id).append("|");
+        }
+        String idStr = sb.toString();
+        idStr = idStr.substring(0,idStr.length()-1);
+        sendTextMessage(message,"toDept",idStr);
+    }
+    private void sendTextMessage(String message,String type,String ids) {
+        String url = MessageFormat.format(SEND_MESSAGE_URL,getAccessToken(TOKEN_TYPE_NORMAL));
+
+        Map<String,String> messageMap = Maps.newHashMap();
+        messageMap.put("content",message);
+
+        Map<String,Object> param = Maps.newHashMap();
+//        if("toUser".equals(type)) {
+//            param.put("touser",ids);
+//        } else if("toDept".equals(type)) {
+//            param.put("toparty",ids);
+//        }
+        param.put(type,ids);
+        param.put("msgtype","text");
+        param.put("agentid",agentId);
+        param.put("text",messageMap);
+
+        String result = sendPostRequest(url,param);
+        //JSON -> Map
+        Map<String,Object> map = JSON.parseObject(result, HashMap.class);
+        Integer errorCode = Integer.valueOf(map.get("errcode").toString());
+        if(!errorCode.equals(0)) {
+            throw new RuntimeException("发送微信消息异常，错误码:" + errorCode + " 错误原因：" + errorCodeMap.get(errorCode));
         }
     }
 
