@@ -10,7 +10,12 @@ public class Student {
         return id;
     }
 
-    public void setId(Integer id) {
+    @Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", age=" + age + "]";
+	}
+
+	public void setId(Integer id) {
         this.id = id;
     }
 
