@@ -1,10 +1,10 @@
 package com.kaishengit;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.kaishengit.pojo.Aconter;
-import com.kaishengit.pojo.Book;
+import com.kaishengit.pojo.*;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
@@ -13,7 +13,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.kaishengit.pojo.Student;
 import com.kaishengit.util.HibernateUtil;
 
 import javax.jws.soap.SOAPBinding;
@@ -105,7 +104,7 @@ public class CriteriaTest {
 //		Aconter aconter= (Aconter) session.get(Aconter.class,3);
 //		Set<Book> books=aconter.getBooks();
 //		for(Book book:books){
-//			System.out.println(book);
+//			System.out.println(book.getName());
 //		}
 
 
@@ -116,7 +115,43 @@ public class CriteriaTest {
 
 
 	//ManyToMany
-	
+	@Test
+	public void save1(){
+		Boos boos=new Boos();
+		User user=new User();
+
+		boos.setName("book1");
+		user.setName("user1");
+
+		Set<User> users=new HashSet<>();
+		users.add(user);
+		boos.setUserSet(users);
+//		Set<Boos> boosSet=new HashSet<>();
+//		boosSet.add(boos);
+//		user.setBoosSet(boosSet);
+
+		session.save(boos);
+		session.save(user);
+
+	}
+	@Test
+	public void find1(){
+		Criteria criteria=session.createCriteria(Boos.class);
+		//一对多是根据另一张表的查询是给属性名起一个别名
+//		criteria.createAlias("userSet","u");
+//		criteria.add(Restrictions.eq("u.name","user1"));
+		List<Boos> boosList=criteria.list();
+		System.out.println(boosList.size());
+		for(Boos boos:boosList){
+			for(User user:boos.getUserSet()){
+				System.out.println(user.getName());
+			}
+		}
+
+
+
+
+	}
 
 
 }

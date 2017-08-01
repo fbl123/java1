@@ -32,6 +32,8 @@
         <mapping resource="hbm/Student.hbm.xml"></mapping>
         <mapping resource="hbm/Aconter.hbm.xml"></mapping>
         <mapping resource="hbm/Book.hbm.xml"></mapping>
+        <mapping resource="hbm/Boos.hbm.xml"></mapping>
+        <mapping resource="hbm/User.hbm.xml"></mapping>
     </session-factory>
 
 </hibernate-configuration>
