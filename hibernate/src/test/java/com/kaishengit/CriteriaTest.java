@@ -1,7 +1,10 @@
 package com.kaishengit;
 
 import java.util.List;
+import java.util.Set;
 
+import com.kaishengit.pojo.Aconter;
+import com.kaishengit.pojo.Book;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
@@ -12,6 +15,8 @@ import org.junit.Test;
 
 import com.kaishengit.pojo.Student;
 import com.kaishengit.util.HibernateUtil;
+
+import javax.jws.soap.SOAPBinding;
 
 public class CriteriaTest {
 	
@@ -62,10 +67,56 @@ public class CriteriaTest {
 			System.out.println(stu);
 		}
 		
-		
-		
-		
-		
+
 	}
+
+
+	//		OneToMany
+	@Test
+	public void save(){
+		Book book =new Book();
+		Aconter aconter=new Aconter();
+		aconter.setName("江南");
+		book.setName("缥缈录1");
+		book.setAconter(aconter);
+
+		session.save(aconter);
+		session.save(book);
+
+
+
+
+	}
+	@Test
+	public void find(){
+		Book book= (Book) session.get(Book.class,1);
+
+
+		for(Book book1:book.getAconter().getBooks()){
+			System.out.println(book1.getName());
+		}
+
+//		System.out.println(book.getName());
+
+//		System.out.println(book.getAconter().getName());
+
+
+
+//		Aconter aconter= (Aconter) session.get(Aconter.class,3);
+//		Set<Book> books=aconter.getBooks();
+//		for(Book book:books){
+//			System.out.println(book);
+//		}
+
+
+
+
+
+	}
+
+
+	//ManyToMany
+	
+
 
 }

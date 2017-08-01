@@ -1,0 +1,20 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.kaishengit.pojo">
+    <class name="Aconter" table="aconter">
+
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="name" column="name" />
+        <!--
+            inverse:放弃关系维护
+        -->
+        <set name="books" inverse="true">
+            <key column="aconter_id"></key>
+            <one-to-many class="Book"></one-to-many>
+        </set>
+    </class>
+
+</hibernate-mapping>

@@ -30,6 +30,8 @@
 
             <!--映射资源-->
         <mapping resource="hbm/Student.hbm.xml"></mapping>
+        <mapping resource="hbm/Aconter.hbm.xml"></mapping>
+        <mapping resource="hbm/Book.hbm.xml"></mapping>
     </session-factory>
 
 </hibernate-configuration>
