@@ -88,12 +88,24 @@ public class CriteriaTest {
 	}
 	@Test
 	public void find(){
-		Book book= (Book) session.get(Book.class,1);
+
+		Criteria criteria=session.createCriteria(Aconter.class);
+		//根据多表中的属性去查询时需要给该对象起别名
+		criteria.createAlias("books","b");
+		criteria.add(Restrictions.eq("b.name","西游记"));
+
+		Aconter aconter= (Aconter) criteria.uniqueResult();
+		System.out.println(aconter.getName());
+		session.delete(aconter);
 
 
-		for(Book book1:book.getAconter().getBooks()){
-			System.out.println(book1.getName());
-		}
+
+//		Book book= (Book) session.get(Book.class,1);
+//
+//
+//		for(Book book1:book.getAconter().getBooks()){
+//			System.out.println(book1.getName());
+//		}
 
 //		System.out.println(book.getName());
 
@@ -137,19 +149,16 @@ public class CriteriaTest {
 	@Test
 	public void find1(){
 		Criteria criteria=session.createCriteria(Boos.class);
-		//一对多是根据另一张表的查询是给属性名起一个别名
-//		criteria.createAlias("userSet","u");
-//		criteria.add(Restrictions.eq("u.name","user1"));
 		List<Boos> boosList=criteria.list();
-		System.out.println(boosList.size());
 		for(Boos boos:boosList){
+//			System.out.println(boos.getId());
 			for(User user:boos.getUserSet()){
-				System.out.println(user.getName());
+				System.out.println(user.getName()+user.getId());
 			}
 		}
-
-
-
+	}
+	@Test
+	public void del(){
 
 	}
 

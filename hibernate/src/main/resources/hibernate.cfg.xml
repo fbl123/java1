@@ -34,6 +34,8 @@
         <mapping resource="hbm/Book.hbm.xml"></mapping>
         <mapping resource="hbm/Boos.hbm.xml"></mapping>
         <mapping resource="hbm/User.hbm.xml"></mapping>
+        <mapping resource="hbm/Perpor.hbm.xml"></mapping>
+        <mapping resource="hbm/Address.hbm.xml"></mapping>
     </session-factory>
 
 </hibernate-configuration>

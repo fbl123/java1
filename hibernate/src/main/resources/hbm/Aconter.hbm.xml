@@ -9,9 +9,10 @@
         </id>
         <property name="name" column="name" />
         <!--
-            inverse:放弃关系维护
+            inverse:true 放弃关系维护
+           cascade : delete 级联删除
         -->
-        <set name="books" inverse="true">
+        <set name="books" inverse="true" cascade="delete">
             <key column="aconter_id"></key>
             <one-to-many class="Book"></one-to-many>
         </set>
