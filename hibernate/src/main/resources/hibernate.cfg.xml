@@ -36,6 +36,8 @@
         <mapping resource="hbm/User.hbm.xml"></mapping>
         <mapping resource="hbm/Perpor.hbm.xml"></mapping>
         <mapping resource="hbm/Address.hbm.xml"></mapping>
+        <mapping resource="hbm/Post.hbm.xml"></mapping>
+        <mapping resource="hbm/PostContent.hbm.xml"></mapping>
     </session-factory>
 
 </hibernate-configuration>
