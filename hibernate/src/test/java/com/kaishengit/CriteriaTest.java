@@ -157,10 +157,9 @@ public class CriteriaTest {
 			}
 		}
 	}
-	@Test
-	public void del(){
 
-	}
+
+
 
 
 }

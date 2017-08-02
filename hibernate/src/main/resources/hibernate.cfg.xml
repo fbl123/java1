@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
@@ -21,6 +22,11 @@
         <property name="c3p0.timeout">3000</property>
         <property name="c3p0.idle_test_period">3000</property>
         <property name="c3p0.validate">false</property>
+        
+        <!--开启二级缓存-->
+        <property name="cache.use_second_level_cache">true</property>
+        <!--选择二级缓存的实现类在这用的是ehcache框架的-->
+        <property name="cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
 
 
         <!--将生成的SQL打印在控制台-->

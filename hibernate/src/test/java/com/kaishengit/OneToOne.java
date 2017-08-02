@@ -57,8 +57,9 @@ public class OneToOne {
 //        session.save(post);
 //        session.save(postContent);
 
-       Post post= (Post) session.get(Post.class,3);
-       session.delete(post);
+       Post post= (Post) session.get(Post.class,4);
+//        System.out.println(post.getPostContent().getTitlie());
+//       session.delete(post);
 
     }
 
