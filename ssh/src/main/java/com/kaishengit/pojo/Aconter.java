@@ -1,8 +1,11 @@
 package com.kaishengit.pojo;
 
+import org.hibernate.mapping.Join;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "aconter")
@@ -13,8 +16,8 @@ public class Aconter implements Serializable {
     private Integer id;
     private String name;
 
-    @OneToMany(mappedBy = "aconter")
-    private List<Book> bookList;
+    @OneToMany(mappedBy = "aconter",fetch = FetchType.EAGER)
+    private Set<Book> bookList;
 
     public Integer getId() {
         return id;
@@ -32,11 +35,11 @@ public class Aconter implements Serializable {
         this.name = name;
     }
 
-    public List<Book> getBookList() {
+    public Set<Book> getBookList() {
         return bookList;
     }
 
-    public void setBookList(List<Book> bookList) {
+    public void setBookList(Set<Book> bookList) {
         this.bookList = bookList;
     }
 }

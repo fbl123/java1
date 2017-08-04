@@ -13,7 +13,7 @@ public class Book implements Serializable {
     private Integer id;
 
     private String name;
-    @ManyToOne
+    @ManyToOne(fetch =FetchType.EAGER )
     @JoinColumn(name = "aconter_id")
     private Aconter aconter;
 
