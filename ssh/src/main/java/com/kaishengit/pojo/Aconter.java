@@ -11,6 +11,7 @@ import java.util.Set;
 @Table(name = "aconter")
 public class Aconter implements Serializable {
 
+    private static final long serialVersionUID = 892446396487369376L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

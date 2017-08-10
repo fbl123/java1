@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>com.kaishengit.web.filter.EncodingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	 <filter>
+	  	<filter-name>ValidateFilter</filter-name>
+	  	<filter-class>com.kaishengit.web.filter.ValidateFilter</filter-class>
+	  	<init-param>
+	  		<param-name>validateUrl</param-name>
+	  		<param-value>/home,/emp,/com,/pro,/invest,/sal</param-value>
+	  	</init-param>
+	  </filter>
+	  
+	  <filter-mapping>
+	  	<filter-name>ValidateFilter</filter-name>
+	  	<!-- 表示所有的请求都要经过该过滤器 -->
+	  	<url-pattern>/*</url-pattern>
+	  </filter-mapping> 
+	  
+	  
+	  <filter>
+		<filter-name>PriviligeFilter</filter-name>
+		<filter-class>com.kaishengit.web.filter.PriviligeFilter</filter-class>
+		<init-param>
+	  		<param-name>privUrl</param-name>
+	  		<param-value>/emp,/com,/pro,/invest,/sal</param-value>
+	  	</init-param>
+	  </filter>
+	  <filter-mapping>
+		<filter-name>PriviligeFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	  </filter-mapping>
+	  
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/error/404.jsp</location>
+	</error-page>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+</web-app>
